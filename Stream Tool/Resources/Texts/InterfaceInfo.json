@@ -1,0 +1,52 @@
+{
+    "charactersBase": [
+        "Dr Mario",
+        "Mario",
+        "Luigi",
+        "Bowser",
+        "Peach",
+        "Yoshi",
+        "Donkey Kong",
+        "Captain Falcon",
+        "Ganondorf",
+        "Falco",
+        "Fox",
+        "Ness",
+        "Ice Climbers",
+        "Kirby",
+        "Samus",
+        "Zelda",
+        "Link",
+        "Young Link",
+        "Pichu",
+        "Pikachu",
+        "Jigglypuff",
+        "Mewtwo",
+        "Mr Game & Watch",
+        "Marth",
+        "Roy",
+        "Random"
+    ],
+    "colorSlots": {
+        "color0": {
+            "name": "Red",
+            "hex": "#e54c4c"
+        },
+        "color1": {
+            "name": "Blue",
+            "hex": "#4b4ce5"
+        },
+        "color2": {
+            "name": "Yellow",
+            "hex": "#ffcb00"
+        },
+        "color3": {
+            "name": "Green",
+            "hex": "#00b200"
+        },
+        "color4": {
+            "name": "CPU",
+            "hex": "#808080"
+        }
+    }
+}

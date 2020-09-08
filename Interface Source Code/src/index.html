@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Melee Stream Tool</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="gui.js" defer></script>
+    <script src="mousetrap.min.js" defer></script>
+  </head>
+  
+  <body>
+
+    <div id="viewport"> <!-- so we can move the viewport easily -->
+
+      <div id="bracket">
+
+      </div>
+
+      <div id="overlay">
+
+        <div id="playerRegion">
+
+          <div id="player1" class="player">
+
+            <div class="charImgBox">
+              <img id="p1CharImg" class="charImg"/>
+            </div>
+
+            <div class="pEditor" id="p1Editor">
+
+              <div id="p1Info" class="pInfo">
+                <input type="text" id="p1Tag" class="textInput mousetrap" tabindex="1" placeholder="Tag" title="Insert the tag/team/sponsor here" spellcheck="false" contenteditable="true">
+                <input type="text" id="p1Name" class="textInput mousetrap" tabindex="2" placeholder="Player 1" title="Insert P1's name here" spellcheck="false">
+                <div id="p1Color" class="pColor" tabindex="5" title="Change the color slot for this player">
+                  <div class="colorContainer">
+                    <div id="p1ColorRect" class="pColorRect"></div>
+                  </div>
+                  <div class="dropdownColor" id="dropdownColorP1">
+
+                  </div>
+                </div>
+              </div>
+  
+              <div class="scoreInfo">
+
+                <div class="scoreBox" title="Press F1 to increase the score">
+                  <span>Wins</span>
+                  <input type="checkbox" id="winP1-1" class="scoreCheck mousetrap">
+                  <input type="checkbox" id="winP1-2" class="scoreCheck mousetrap">
+                  <input type="checkbox" id="winP1-3" class="scoreCheck mousetrap">
+                </div>
+                
+                <div class="wlButtons">
+                  <div id="p1W" class="wlBox">[W]</div>
+                  <div id="p1L" class="wlBox">[L]</div>
+                </div>
+                
+              </div>
+
+              <div class="charInfo">
+
+                <div class="charSelector" title="Everyone is here!">
+                  <img class="charSelectorImg" id="p1CharSelector" tabindex="50"/>
+                </div>
+
+                <div>
+                  <div class="skinSelector" id="skinSelectorP1">
+                    <div id="skinListP1"></div>
+                    <div id="skinListP1Sheik"></div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+          
+          <div id="playerSep">
+            <div id="swapButton" title="Swap P1's and P2's values">
+              <svg class="midIcon" id="swapIcon" viewBox="0 0 1000 1000">
+                <g><g transform="translate(0.000000,119.000000) scale(0.100000,-0.100000)">
+                <path d="M7532.4,517.6c-104.1-112.8-190.8-234.2-190.8-277.5s260.2-346.9,581.1-667.8l581.1-589.7H5017.4H1531v-346.9v-346.9h3486.4h3486.4l-581.1-589.7c-320.9-320.9-581.1-624.4-581.1-676.5s95.4-182.1,216.8-294.9l225.4-208.1l1058.1,1058L9900-1364.3L8859.3-323.6C8286.9,248.8,7801.2,717.1,7766.6,717.1C7740.5,717.1,7636.5,630.4,7532.4,517.6z"/><path d="M1140.7-5180.2L100-6220.9L1158.1-7279l1058-1058.1l225.5,208.2c121.4,112.7,216.8,242.8,216.8,294.9c0,52-260.2,355.5-581.1,676.4l-581,589.7h3486.3H8469v346.9v346.9H4982.6H1496.3l581,589.7c320.9,320.9,581.1,624.4,581.1,676.4c0,86.7-355.6,468.4-442.3,468.4C2198.8-4139.5,1713.1-4607.9,1140.7-5180.2z"/></g></g>
+              </svg>
+            </div>
+            <div id="clearButton" title="Clear player names, character and win values. [Shortcut: Esc]">
+              <svg class="midIcon" id="clearIcon" viewBox="-40 0 427 427.00131">
+                <path d="m232.398438 154.703125c-5.523438 0-10 4.476563-10 10v189c0 5.519531 4.476562 10 10 10 5.523437 0 10-4.480469 10-10v-189c0-5.523437-4.476563-10-10-10zm0 0"/><path d="m114.398438 154.703125c-5.523438 0-10 4.476563-10 10v189c0 5.519531 4.476562 10 10 10 5.523437 0 10-4.480469 10-10v-189c0-5.523437-4.476563-10-10-10zm0 0"/><path d="m28.398438 127.121094v246.378906c0 14.5625 5.339843 28.238281 14.667968 38.050781 9.285156 9.839844 22.207032 15.425781 35.730469 15.449219h189.203125c13.527344-.023438 26.449219-5.609375 35.730469-15.449219 9.328125-9.8125 14.667969-23.488281 14.667969-38.050781v-246.378906c18.542968-4.921875 30.558593-22.835938 28.078124-41.863282-2.484374-19.023437-18.691406-33.253906-37.878906-33.257812h-51.199218v-12.5c.058593-10.511719-4.097657-20.605469-11.539063-28.03125-7.441406-7.421875-17.550781-11.5546875-28.0625-11.46875h-88.796875c-10.511719-.0859375-20.621094 4.046875-28.0625 11.46875-7.441406 7.425781-11.597656 17.519531-11.539062 28.03125v12.5h-51.199219c-19.1875.003906-35.394531 14.234375-37.878907 33.257812-2.480468 19.027344 9.535157 36.941407 28.078126 41.863282zm239.601562 279.878906h-189.203125c-17.097656 0-30.398437-14.6875-30.398437-33.5v-245.5h250v245.5c0 18.8125-13.300782 33.5-30.398438 33.5zm-158.601562-367.5c-.066407-5.207031 1.980468-10.21875 5.675781-13.894531 3.691406-3.675781 8.714843-5.695313 13.925781-5.605469h88.796875c5.210937-.089844 10.234375 1.929688 13.925781 5.605469 3.695313 3.671875 5.742188 8.6875 5.675782 13.894531v12.5h-128zm-71.199219 32.5h270.398437c9.941406 0 18 8.058594 18 18s-8.058594 18-18 18h-270.398437c-9.941407 0-18-8.058594-18-18s8.058593-18 18-18zm0 0"/><path d="m173.398438 154.703125c-5.523438 0-10 4.476563-10 10v189c0 5.519531 4.476562 10 10 10 5.523437 0 10-4.480469 10-10v-189c0-5.523437-4.476563-10-10-10zm0 0"/>
+              </svg>
+            </div>
+          </div>
+          
+  
+          <div id="player2" class="player">
+
+            <div class="charImgBox">
+              <img id="p2CharImg" class="charImg"/>
+            </div>
+            
+            <div class="pEditor">
+
+              <div id="p2Info" class="pInfo">
+                <input type="text" id="p2Tag" class="textInput mousetrap" tabindex="3" placeholder="Tag" title="Insert the tag/team/sponsor here." spellcheck="false">
+                <input type="text" id="p2Name" class="textInput mousetrap" tabindex="4" placeholder="Player 2" title="Insert P2's name here." spellcheck="false">
+                <div id="p2Color" class="pColor" tabindex="6">
+                  <div class="colorContainer" title="Change the color slot for this player">
+                    <div id="p2ColorRect" class="pColorRect"></div>
+                  </div>
+                  <div class="dropdownColor" id="dropdownColorP2"></div>
+                </div>
+              </div>
+  
+              <div class="scoreInfo">
+
+                <div class="scoreBox" title="Press F2 to increase the score">
+                  <span>Wins</span>
+                  <input type="checkbox" id="winP2-1" class="scoreCheck mousetrap">
+                  <input type="checkbox" id="winP2-2" class="scoreCheck mousetrap">
+                  <input type="checkbox" id="winP2-3" class="scoreCheck mousetrap">
+                </div>
+
+                <div class="wlButtons">
+                  <div id="p2W" class="wlBox">[W]</div>
+                  <div id="p2L" class="wlBox">[L]</div>
+                </div>
+
+              </div>
+
+              <div class="charInfo">
+
+                <div class="charSelector" title="Everyone is here!">
+                  <img class="charSelectorImg" id="p2CharSelector" tabindex="50"/>
+                </div>
+
+                <div>
+                  <div class="skinSelector" id="skinSelectorP2">
+                    <div id="skinListP2"></div>
+                    <div id="skinListP2Sheik"></div>
+                  </div>
+                </div>
+
+              </div>
+              
+            </div>
+
+          </div>
+        </div>
+        
+        <div id="roundInfo">
+          <div id="bestOf">
+            <div id="bo3Div" class="bestOfBox">Best of 3</div>
+            <div id="bo5Div" class="bestOfBox">Best of 5</div>
+          </div>
+          <input type="text" id="roundName" class="textInput mousetrap" placeholder="Current Round" spellcheck="false">
+          <input type="text" id="tournamentName" class="textInput mousetrap" placeholder="Tournament Name" spellcheck="false">
+        </div>
+
+        <div id=casterInfo>
+
+          <div id=caster1 class="caster">
+
+            <svg class="casterIcon" id="casterIcon1" viewBox="0 0 261.075 261.075">
+              <path d="M126.855,174.05h5.744c22.447,0,40.641-18.194,40.641-40.641V40.641C173.24,18.194,155.046,0,132.599,0h-5.744c-22.447,0-40.641,18.194-40.641,40.641v92.769C86.215,155.856,104.408,174.05,126.855,174.05z"/>
+              <path d="M124.288,201.147v43.61H86.215c-4.504,0-8.159,3.65-8.159,8.159s3.655,8.159,8.159,8.159h92.464c4.504,0,8.159-3.65,8.159-8.159s-3.655-8.159-8.159-8.159h-38.073v-43.823c34.832-3.138,63.262-34.44,63.262-71.208c0-4.509-3.655-8.159-8.159-8.159s-8.159,3.65-8.159,8.159c0,29.92-24.122,55.201-52.672,55.201h-8.686c-28.544,0-52.666-24.699-52.666-53.939c0-4.509-3.655-8.159-8.159-8.159s-8.159,3.65-8.159,8.159C57.208,169.073,87.134,200.109,124.288,201.147z"/>
+            </svg>
+            <input type="text" id="cName1" class="textInput mousetrap" placeholder="Caster 1 name" spellcheck="false">
+            
+            <svg class="casterIcon" id="twitterIcon" viewBox="0 0 20 20">
+							<path d="M18.258,3.266c-0.693,0.405-1.46,0.698-2.277,0.857c-0.653-0.686-1.586-1.115-2.618-1.115c-1.98,0-3.586,1.581-3.586,3.53c0,0.276,0.031,0.545,0.092,0.805C6.888,7.195,4.245,5.79,2.476,3.654C2.167,4.176,1.99,4.781,1.99,5.429c0,1.224,0.633,2.305,1.596,2.938C2.999,8.349,2.445,8.19,1.961,7.925C1.96,7.94,1.96,7.954,1.96,7.97c0,1.71,1.237,3.138,2.877,3.462c-0.301,0.08-0.617,0.123-0.945,0.123c-0.23,0-0.456-0.021-0.674-0.062c0.456,1.402,1.781,2.422,3.35,2.451c-1.228,0.947-2.773,1.512-4.454,1.512c-0.291,0-0.575-0.016-0.855-0.049c1.588,1,3.473,1.586,5.498,1.586c6.598,0,10.205-5.379,10.205-10.045c0-0.153-0.003-0.305-0.01-0.456c0.7-0.499,1.308-1.12,1.789-1.827c-0.644,0.28-1.334,0.469-2.06,0.555C17.422,4.782,17.99,4.091,18.258,3.266"></path>
+						</svg>
+            <input type="text" id="cTwitter1" class="textInput mousetrap" placeholder="Caster 1 twitter" spellcheck="false">
+            
+            <svg class="casterIcon" id="twitchIcon" viewBox="0 0 24 24">
+              <path d="m.975 4.175v16.694h5.749v3.131h3.139l3.134-3.132h4.705l6.274-6.258v-14.61h-21.434zm3.658-2.09h17.252v11.479l-3.66 3.652h-5.751l-3.134 3.127v-3.127h-4.707z"/>
+              <path d="m10.385 6.262h2.09v6.26h-2.09z"/>
+              <path d="m16.133 6.262h2.091v6.26h-2.091z"/>
+            </svg>
+            <input type="text" id="cTwitch1" class="textInput mousetrap" placeholder="Caster 1 Twitch" spellcheck="false">
+
+          </div>
+
+          <div id=caster2 class="caster">
+
+            <svg class="casterIcon" id="casterIcon2" viewBox="0 0 261.075 261.075">
+              <path d="M126.855,174.05h5.744c22.447,0,40.641-18.194,40.641-40.641V40.641C173.24,18.194,155.046,0,132.599,0h-5.744c-22.447,0-40.641,18.194-40.641,40.641v92.769C86.215,155.856,104.408,174.05,126.855,174.05z"/>
+              <path d="M124.288,201.147v43.61H86.215c-4.504,0-8.159,3.65-8.159,8.159s3.655,8.159,8.159,8.159h92.464c4.504,0,8.159-3.65,8.159-8.159s-3.655-8.159-8.159-8.159h-38.073v-43.823c34.832-3.138,63.262-34.44,63.262-71.208c0-4.509-3.655-8.159-8.159-8.159s-8.159,3.65-8.159,8.159c0,29.92-24.122,55.201-52.672,55.201h-8.686c-28.544,0-52.666-24.699-52.666-53.939c0-4.509-3.655-8.159-8.159-8.159s-8.159,3.65-8.159,8.159C57.208,169.073,87.134,200.109,124.288,201.147z"/>
+            </svg>
+            <input type="text" id="cName2" class="textInput mousetrap" placeholder="Caster 2 name" spellcheck="false">
+            
+            <svg class="casterIcon" id="twitterIcon" viewBox="0 0 20 20">
+							<path d="M18.258,3.266c-0.693,0.405-1.46,0.698-2.277,0.857c-0.653-0.686-1.586-1.115-2.618-1.115c-1.98,0-3.586,1.581-3.586,3.53c0,0.276,0.031,0.545,0.092,0.805C6.888,7.195,4.245,5.79,2.476,3.654C2.167,4.176,1.99,4.781,1.99,5.429c0,1.224,0.633,2.305,1.596,2.938C2.999,8.349,2.445,8.19,1.961,7.925C1.96,7.94,1.96,7.954,1.96,7.97c0,1.71,1.237,3.138,2.877,3.462c-0.301,0.08-0.617,0.123-0.945,0.123c-0.23,0-0.456-0.021-0.674-0.062c0.456,1.402,1.781,2.422,3.35,2.451c-1.228,0.947-2.773,1.512-4.454,1.512c-0.291,0-0.575-0.016-0.855-0.049c1.588,1,3.473,1.586,5.498,1.586c6.598,0,10.205-5.379,10.205-10.045c0-0.153-0.003-0.305-0.01-0.456c0.7-0.499,1.308-1.12,1.789-1.827c-0.644,0.28-1.334,0.469-2.06,0.555C17.422,4.782,17.99,4.091,18.258,3.266"></path>
+						</svg>
+            <input type="text" id="cTwitter2" class="textInput mousetrap" placeholder="Caster 2 twitter" spellcheck="false">
+          
+            <svg class="casterIcon" id="twitchIcon" viewBox="0 0 24 24">
+              <path d="m.975 4.175v16.694h5.749v3.131h3.139l3.134-3.132h4.705l6.274-6.258v-14.61h-21.434zm3.658-2.09h17.252v11.479l-3.66 3.652h-5.751l-3.134 3.127v-3.127h-4.707z"/>
+              <path d="m10.385 6.262h2.09v6.26h-2.09z"/>
+              <path d="m16.133 6.262h2.091v6.26h-2.091z"/>
+            </svg>
+            <input type="text" id="cTwitch2" class="textInput mousetrap" placeholder="Caster 2 Twitch" spellcheck="false">
+
+          </div>
+
+        </div>
+        
+        <div id="botBar">
+          <div id="updateRegion" class="botRegion" title="Save current info to the json file. [Shortcut: Enter]">
+            <div class="rectangle"></div>
+            <span class="botText">UPDATE</span>
+            <div class="rectangle"></div>
+          </div>
+          <div id="settingsRegion" class="botRegion" title="Settings">
+            <svg id="configIcon" viewBox="0 0 20 20">
+							<path d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path>
+						</svg>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="settings">
+        <div id="settingsTitle">SETTINGS</div>
+        <div id="actualSettings">
+          <div class="settingBox" title="Plays an intro on 'Scoreboard.html' whenever the file loads">
+            <input type="checkbox" id="allowIntro" class="settingsCheck" tabindex="-1">
+            <label for="allowIntro" class="settingsText">Allow Intro</span>
+          </div>
+          <div class="settingBox" title="Forces the [W]/[L] buttons to appear on the interface.
+They will always appear when typing 'Grand' on the round box.">
+            <input type="checkbox" id="forceWLToggle" class="settingsCheck" tabindex="-1">
+            <label for="allowIntro" class="settingsText">Force [W] / [L]</span>
+          </div>
+        </div>        
+      </div>
+
+      <div id="charRoster">
+        <div class="rosterLine" id="rosterLine1">
+          
+        </div>
+        <div class="rosterLine" id="rosterLine2">
+
+        </div>
+        <div class="rosterLine" id="rosterLine3">
+
+        </div>
+      </div>
+
+      <div id="goBack"></div>
+
+    </div>
+    
+  </body>
+</html>

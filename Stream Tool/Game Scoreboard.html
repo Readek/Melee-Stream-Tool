@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Melee Game Overlay</title>
+
+    <script src="Resources/Scripts/Game Scoreboard.js"></script>
+    <script src="Resources/Scripts/gsap.min.js"></script>
+    
+
+    <style>
+        @font-face {
+            font-family: "Deansgate";
+            src: url('Resources/Fonts/DeansgateCondensed-Bold.ttf');
+        }
+
+        @font-face {
+            font-family: "Roboto";
+            src: url('Resources/Fonts/Roboto-Bold.ttf');
+        }
+
+        @font-face {
+            font-family: "LemonMilk";
+            src: url('Resources/Fonts/LEMONMILK-Medium.otf');
+        }
+
+
+        body {
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            background: transparent;
+            padding: 0px;
+            margin: 0px;
+            text-transform: uppercase;
+            color: white;
+            font-family: "Deansgate";
+        }
+
+
+        .absol {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+
+        .mirror {
+            transform: scaleX(-1);
+        }
+
+        
+        #theBackground {
+            position: absolute;
+            width: 1920px;
+            height: 1080px;
+            top: 0px;
+            left: 0px;
+            -webkit-mask-image: url("Resources/Overlay/Game\ Mask.png");
+        }
+
+
+        .scoreboardP1 {
+            position: absolute;
+            left: 18px;
+            top: 17px;
+        }
+
+        .scoreboardP2 {
+            position: absolute;
+            right: 18px;
+            top: 17px;
+        }
+
+        .scoreboardP2Fixed {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+
+        .rect {
+            width: 257px;
+            height: 355px;
+            position: absolute;
+        }
+        #p1Color {
+            left: 4px;
+            top: 4px;
+        }
+        #p2Color {
+            right: 4px;
+            top: 4px;
+        }
+
+
+        .pCharacter {
+            position: absolute;
+            width: 257px;
+            height: 355px;
+            opacity: 0;
+        }
+        #p1Character {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+        #p2Character {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+
+        #p1CharaMask, #p2CharaMask {
+            position: absolute;
+            width: 257px;
+            height: 355px;
+            top: 4px;
+            left: 4px;
+            clip: rect(0px,257px,355px,0px);
+        }
+
+
+        .sagaIcon {
+            position: absolute;
+            top: 20px;
+            transform: scale(1.4);
+            opacity: 0;
+        }
+        #sagaIconP1 {
+            left: 20px;
+        }
+        #sagaIconP2 {
+            right: 20px;
+        }
+
+
+        .teamLogo {
+            position: absolute;
+            top: 295px;
+            width: 60px;
+            height: 60px;
+            opacity: 0;
+        }
+        #teamLogoP1 {
+            left: 8px;
+        }
+        #teamLogoP2 {
+            right: 8px;
+        }
+        
+
+        .wrappers {
+            position: absolute;
+            width: 255px;
+            height: 54px;
+            line-height: 54px;
+            text-align: center;
+            top: 0px;
+            opacity: 0;
+            color: black;
+        }
+
+        #p1Wrapper {
+            top: 356px;
+            left: 5px;
+        }
+
+        #p2Wrapper {
+            top: 356px;
+            right: 5px;
+        }
+
+        .teams {
+            color: rgb(116, 116, 116);
+        }
+
+
+        .scores {
+            position: absolute;
+            top: 434px;
+        }
+        #scoresP2 {
+            right: 35px;
+        }
+        .scoreTick {
+            position: absolute;
+        }
+        #win1P1 {
+            left: 248px;
+            opacity: 0;
+        }
+        #win2P1 {
+            left: 213px;
+            opacity: 0;
+        }
+        #win3P1 {
+            left: 178px;
+            opacity: 0;
+        }
+        #wlP1 {
+            left: 64px;
+            opacity: 0;
+        }
+        #win1P2 {
+            right: 248px;
+            opacity: 0;
+        }
+        #win2P2 {
+            right: 213px;
+            opacity: 0;
+        }
+        #win3P2 {
+            right: 178px;
+            opacity: 0;
+        }
+        #wlP2 {
+            right: 144px;
+            opacity: 0;
+        }
+
+
+        #overlayRound {
+            position: absolute;
+            left: 20px;
+            bottom: 70px;
+            opacity: 0;
+            filter: drop-shadow(0px 0px 3px black);
+        }
+
+        #roundBG {
+            position: absolute;
+        }
+
+        #round {
+            position: absolute;
+            width: 255px;
+            height: 36px;
+            bottom: 0px;
+            text-align: center;
+            font-family: "Roboto";
+        }
+
+        #bestOf {
+            position: absolute;
+            width: 255px;
+            height: 24px;
+            bottom: -22px;
+            text-align: center;
+            font-family: "Roboto";
+            font-size: 20px;
+            color: rgb(206, 206, 206);
+        }
+
+
+        #overlayCasters {
+            position: absolute;
+            right: 12px;
+            bottom: 25px;
+            opacity: 1;
+            transform: scale(1.1);
+            filter: drop-shadow(0px 0px 3px black);
+        }
+        #caster1 {
+            position: absolute;
+            bottom: 110px;
+        }
+        #caster2 {
+            position: absolute;
+            bottom: 50px;
+        }
+        .casterTextBox {
+            position: absolute;
+            width: 255px;
+            height: 36px;
+            right: 0px;
+            text-align: center;
+        }
+        .casterIcon {
+            height: 23px;
+            width: 22px;
+            fill: white;
+            transform: translate(3px, 2px);
+        }
+        .casterText {
+            font-size: 22px;
+            font-family: "Roboto";
+        }
+
+        .casterTwitterBox {
+            position: absolute;
+            width: 255px;
+            height: 36px;
+            bottom: -60px;
+            right: 0px;
+            text-align: center;
+        }
+        .twitterIcon {
+            height: 20px;
+            width: 20px;
+            transform: translateY(3px);
+            fill: rgb(168, 168, 168);
+        }
+        .casterTwitchBox {
+            position: absolute;
+            width: 255px;
+            height: 36px;
+            bottom: -62px;
+            right: 0px;
+            text-align: center;
+        }
+        .twitchIcon {
+            height: 17px;
+            width: 17px;
+            fill: rgb(168, 168, 168);
+            transform: translateY(2px);
+        }
+        .socialText {
+            font-size: 18px;
+            font-family: "Roboto";
+            color: rgb(168, 168, 168);
+        }
+
+        
+
+        #introVid {
+            position: absolute;
+            top: 0px;
+        }
+
+
+        .pIntro {
+            position: absolute;
+            width: 500px;
+            height: 94px;
+            line-height: 74px;
+            bottom: 485px;
+            opacity: 0;
+            font-family: "LemonMilk";
+        }
+
+        #p1Intro {
+            text-align: right;
+            left: 355px;
+            text-shadow: 0px 0px 20px;
+        }
+
+        #p2Intro {
+            text-align: left;
+            right: 355px;
+            text-shadow: 0px 0px 20px;
+        }
+
+
+        .textIntro {
+            position: absolute;
+            text-align: center;
+            opacity: 0;
+        }
+
+        #midTextIntro {
+            width: 1100px;
+            height: 74px;
+            left: 410px;
+            bottom: 505px;
+            font-family: "LemonMilk";
+            line-height: 74px;
+            font-size: 110px;
+        }
+
+        #rtIntro {
+            line-height: 40px;
+            font-size: 48px;
+        }
+
+        #roundIntro {
+            left: 510px;
+            width: 900px;
+            height: 40px;
+            top: 406px;
+        }
+
+        #tNameIntro {
+            left: 510px;
+            width: 900px;
+            height: 40px;
+            bottom: 400px;
+        }
+
+        #introBG {
+            position: absolute;
+            width: 1920px;
+            height: 1080px;
+            top: 0px;
+            background-color: rgba(0, 0, 0, 0.50);
+        }
+
+        #superCoolInterrogation {
+            position: absolute;
+            height: 74px;
+            right: 550px;
+            font-family: "LemonMilk";
+            line-height: 74px;
+            bottom: 505px;
+            font-size: 110px;
+            opacity: 0;
+        }
+
+        #overlayIntro {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="theBackground">
+        <video autoplay loop class="absol" src="Resources/Overlay/BG.webm"></video>
+    </div>
+    <img class="absol" src="Resources/Overlay/Screenshot.png">
+
+    <img class="absol" src="Resources/Overlay/Game Borders.png">
+
+
+    <div id="overlayP1" class="scoreboardP1">
+        <img src="Resources/Overlay/Character Border.png" style="position: absolute;"/>
+
+        <div class="rect" id="p1Color"></div>
+        <img class="sagaIcon" id="sagaIconP1">
+        <div id=p1CharaMask>
+            <img id="p1Character" class="pCharacter">
+        </div>
+
+        <img id="teamLogoP1" class="teamLogo">
+
+        <span id="p1Wrapper" class="wrappers">
+            <span id="p1Team" class="teams"></span>
+            <span id="p1Name" class="names"></span>
+        </span>
+    </div>
+    
+    <div id="scoresP1" class="scores">
+        <div id="win1P1" class="scoreTick">
+            <svg width="35" height="23" id="win1P1Color" class="absol">
+                <polygon points="10,0 32,0 25,23 0,23"/>
+            </svg>
+            <img src="Resources/Overlay/Win Border.png" id="win1P1Border" class="absol">
+        </div>
+        
+        <div id="win2P1" class="scoreTick">
+            <svg width="35" height="23" class="absol" id="win2P1Color">
+                <polygon points="10,0 32,0 25,23 0,23"/>
+            </svg>
+            <img src="Resources/Overlay/Win Border.png" class="absol" id="win2P1Border">
+        </div>
+
+        <div id="win3P1" class="scoreTick">
+            <svg width="35" height="23" class="absol" id="win3P1Color">
+                <polygon points="10,0 32,0 25,23 0,23"/>
+            </svg>
+            <img src="Resources/Overlay/Win Border.png" class="absol" id="win3P1Border">
+        </div>
+
+        <div id="wlP1" class="scoreTick">
+            <img src="Resources/Overlay/WL BG.png" class="absol">
+            <img class="absol" id="wlP1Text">
+        </div>
+    </div>
+
+
+    <div id="overlayP2" class="scoreboardP2">
+        <img src="Resources/Overlay/Character Border.png"/>
+
+        <div class="rect" id="p2Color"></div>
+        <img class="sagaIcon" id="sagaIconP2">
+        <div id=p2CharaMask>
+            <div class="mirror absol">
+                <img id="p2Character" class="pCharacter"/>
+            </div>
+        </div>
+
+        <img id="teamLogoP2" class="teamLogo">
+
+        <span id="p2Wrapper" class="wrappers">
+            <span id="p2Team" class="teams"></span>
+            <span id="p2Name" class="names"></span>
+        </span>
+    </div>
+    
+    <div id="scoresP2" class="scores">
+        <div id="win1P2" class="scoreTick">
+            <svg width="35" height="23" id="win1P2Color" class="absol mirror">
+                <polygon points="10,0 32,0 25,23 0,23"/>
+            </svg>
+            <img src="Resources/Overlay/Win Border.png" id="win1P2Border" class="absol mirror">
+        </div>
+        
+        <div id="win2P2" class="scoreTick">
+            <svg width="35" height="23" class="absol mirror" id="win2P2Color">
+                <polygon points="10,0 32,0 25,23 0,23"/>
+            </svg>
+            <img src="Resources/Overlay/Win Border.png" class="absol mirror" id="win2P2Border">
+        </div>
+
+        <div id="win3P2" class="scoreTick">
+            <svg width="35" height="23" class="absol mirror" id="win3P2Color">
+                <polygon points="10,0 32,0 25,23 0,23"/>
+            </svg>
+            <img src="Resources/Overlay/Win Border.png" class="absol mirror" id="win3P2Border">
+        </div>
+
+        <div id="wlP2" class="scoreTick">
+            <img src="Resources/Overlay/WL BG.png" class="absol mirror">
+            <img class="absol" id="wlP2Text">
+        </div>
+    </div>
+
+
+    <div id="overlayRound">
+        <span id="round"></span>
+        <span id="bestOf">Best of 5</span>
+    </div>
+
+    <div id="overlayCasters">
+        <div id="caster1">
+
+            <div id="caster1TextBox" class="casterTextBox">
+                <svg class="casterIcon" viewBox="0 0 261.075 261.075">
+                    <path d="M126.855,174.05h5.744c22.447,0,40.641-18.194,40.641-40.641V40.641C173.24,18.194,155.046,0,132.599,0h-5.744c-22.447,0-40.641,18.194-40.641,40.641v92.769C86.215,155.856,104.408,174.05,126.855,174.05z"/>
+                    <path d="M124.288,201.147v43.61H86.215c-4.504,0-8.159,3.65-8.159,8.159s3.655,8.159,8.159,8.159h92.464c4.504,0,8.159-3.65,8.159-8.159s-3.655-8.159-8.159-8.159h-38.073v-43.823c34.832-3.138,63.262-34.44,63.262-71.208c0-4.509-3.655-8.159-8.159-8.159s-8.159,3.65-8.159,8.159c0,29.92-24.122,55.201-52.672,55.201h-8.686c-28.544,0-52.666-24.699-52.666-53.939c0-4.509-3.655-8.159-8.159-8.159s-8.159,3.65-8.159,8.159C57.208,169.073,87.134,200.109,124.288,201.147z"/>
+                </svg>
+                <span id="caster1N" class="casterText"></span>
+            </div>
+            
+            <div id="caster1SocialBox" class="casterSocialBox">
+                <div id="caster1TwitterBox" class="casterTwitterBox">
+                    <svg class="twitterIcon" viewBox="0 0 20 20">
+                        <path d="M18.258,3.266c-0.693,0.405-1.46,0.698-2.277,0.857c-0.653-0.686-1.586-1.115-2.618-1.115c-1.98,0-3.586,1.581-3.586,3.53c0,0.276,0.031,0.545,0.092,0.805C6.888,7.195,4.245,5.79,2.476,3.654C2.167,4.176,1.99,4.781,1.99,5.429c0,1.224,0.633,2.305,1.596,2.938C2.999,8.349,2.445,8.19,1.961,7.925C1.96,7.94,1.96,7.954,1.96,7.97c0,1.71,1.237,3.138,2.877,3.462c-0.301,0.08-0.617,0.123-0.945,0.123c-0.23,0-0.456-0.021-0.674-0.062c0.456,1.402,1.781,2.422,3.35,2.451c-1.228,0.947-2.773,1.512-4.454,1.512c-0.291,0-0.575-0.016-0.855-0.049c1.588,1,3.473,1.586,5.498,1.586c6.598,0,10.205-5.379,10.205-10.045c0-0.153-0.003-0.305-0.01-0.456c0.7-0.499,1.308-1.12,1.789-1.827c-0.644,0.28-1.334,0.469-2.06,0.555C17.422,4.782,17.99,4.091,18.258,3.266"></path>
+                    </svg>
+                    <span id="caster1Tr" class="socialText"></span>
+                </div>
+
+                <div id="caster1TwitchBox" class="casterTwitchBox">
+                    <svg class="twitchIcon" viewBox="0 0 24 24">
+                        <path d="m.975 4.175v16.694h5.749v3.131h3.139l3.134-3.132h4.705l6.274-6.258v-14.61h-21.434zm3.658-2.09h17.252v11.479l-3.66 3.652h-5.751l-3.134 3.127v-3.127h-4.707z"/>
+                        <path d="m10.385 6.262h2.09v6.26h-2.09z"/>
+                        <path d="m16.133 6.262h2.091v6.26h-2.091z"/>
+                    </svg>
+                    <span id="caster1Th" class="socialText"></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="caster2">
+
+            <div id="caster2TextBox" class="casterTextBox">
+                <svg class="casterIcon" viewBox="0 0 261.075 261.075">
+                    <path d="M126.855,174.05h5.744c22.447,0,40.641-18.194,40.641-40.641V40.641C173.24,18.194,155.046,0,132.599,0h-5.744c-22.447,0-40.641,18.194-40.641,40.641v92.769C86.215,155.856,104.408,174.05,126.855,174.05z"/>
+                    <path d="M124.288,201.147v43.61H86.215c-4.504,0-8.159,3.65-8.159,8.159s3.655,8.159,8.159,8.159h92.464c4.504,0,8.159-3.65,8.159-8.159s-3.655-8.159-8.159-8.159h-38.073v-43.823c34.832-3.138,63.262-34.44,63.262-71.208c0-4.509-3.655-8.159-8.159-8.159s-8.159,3.65-8.159,8.159c0,29.92-24.122,55.201-52.672,55.201h-8.686c-28.544,0-52.666-24.699-52.666-53.939c0-4.509-3.655-8.159-8.159-8.159s-8.159,3.65-8.159,8.159C57.208,169.073,87.134,200.109,124.288,201.147z"/>
+                </svg>
+                <span id="caster2N" class="casterText"></span>
+            </div>
+            
+            <div id="caster2SocialBox" class="casterSocialBox">
+                <div id="caster2TwitterBox" class="casterTwitterBox">
+                    <svg class="twitterIcon" viewBox="0 0 20 20">
+                        <path d="M18.258,3.266c-0.693,0.405-1.46,0.698-2.277,0.857c-0.653-0.686-1.586-1.115-2.618-1.115c-1.98,0-3.586,1.581-3.586,3.53c0,0.276,0.031,0.545,0.092,0.805C6.888,7.195,4.245,5.79,2.476,3.654C2.167,4.176,1.99,4.781,1.99,5.429c0,1.224,0.633,2.305,1.596,2.938C2.999,8.349,2.445,8.19,1.961,7.925C1.96,7.94,1.96,7.954,1.96,7.97c0,1.71,1.237,3.138,2.877,3.462c-0.301,0.08-0.617,0.123-0.945,0.123c-0.23,0-0.456-0.021-0.674-0.062c0.456,1.402,1.781,2.422,3.35,2.451c-1.228,0.947-2.773,1.512-4.454,1.512c-0.291,0-0.575-0.016-0.855-0.049c1.588,1,3.473,1.586,5.498,1.586c6.598,0,10.205-5.379,10.205-10.045c0-0.153-0.003-0.305-0.01-0.456c0.7-0.499,1.308-1.12,1.789-1.827c-0.644,0.28-1.334,0.469-2.06,0.555C17.422,4.782,17.99,4.091,18.258,3.266"></path>
+                    </svg>
+                    <span id="caster2Tr" class="socialText"></span>
+                </div>
+
+                <div id="caster2TwitchBox" class="casterTwitchBox">
+                    <svg class="twitchIcon" viewBox="0 0 24 24">
+                        <path d="m.975 4.175v16.694h5.749v3.131h3.139l3.134-3.132h4.705l6.274-6.258v-14.61h-21.434zm3.658-2.09h17.252v11.479l-3.66 3.652h-5.751l-3.134 3.127v-3.127h-4.707z"/>
+                        <path d="m10.385 6.262h2.09v6.26h-2.09z"/>
+                        <path d="m16.133 6.262h2.091v6.26h-2.091z"/>
+                    </svg>
+                    <span id="caster2Th" class="socialText"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="overlayIntro">
+        <div id="introBG"></div>
+
+        <video id="introVid" width="1920" height="1080"></video>
+
+        <div id="playersIntro">
+            <span id="p1Intro" class="pIntro"></span>
+            <span id="p2Intro" class="pIntro"></span>
+        </div>
+        
+        <div id="textsIntro">
+            <span id="midTextIntro" class="textIntro">VS</span>
+            <div id="rtIntro">
+                <span id="roundIntro" class="textIntro"></span>
+                <span id="tNameIntro" class="textIntro"></span>
+            </div>
+        </div>
+
+        <span id="superCoolInterrogation">?</span>
+    </div>
+</body>
+</html>

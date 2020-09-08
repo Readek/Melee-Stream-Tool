@@ -1,0 +1,608 @@
+
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url('fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: url('fonts/Roboto-Medium.ttf');
+}
+
+:root {
+  --text1: #ececec;
+  --text2: #b6b6b6;
+  --bg1: #131318;
+  --bg2: #383838;
+  --bg3: #1e1e24;
+  --bg4: #444444b6;
+  --bg5: #2b2b2b;
+  --selected: #2ba4eb;
+  --focused: #686868;
+}
+
+body {
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+  background-color: var(--bg2);
+  color: var(--text1);
+  user-select: none;
+  font-family: 'Roboto-Regular';
+  font-size: 16px;
+}
+
+
+/* general text input class*/
+.textInput {
+  outline: none;
+  border: none;
+  background: var(--bg4);
+  color: var(--text1);
+  height: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid var(--bg4);
+  transition: border-color 100ms;  
+}
+input[type="text"] {
+  font-family: 'Roboto-Regular';
+  font-size: 13px;
+}
+
+.textInput:hover {
+  border-color: var(--selected);
+}
+
+.textInput:focus {
+  border-color: var(--focused);
+}
+
+
+/* main viewport */
+#viewport {
+  position: relative;
+  width: 300%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  transition: right 300ms ease;
+}
+
+
+/* where all the magic happens */
+#overlay {
+  width: calc(100% / 3);
+  height: 100%;
+  transition: opacity 300ms;
+}
+
+/* player stuff */
+#playerRegion {
+  display: flex;
+  height: 150px;
+}
+
+.player {
+  width: 49%;
+  position: relative;
+}
+
+
+.charImgBox {
+  width: 100%;
+  height: 100%;
+}
+
+.charImg {
+  right: 0px;
+  top: 0px;
+  height: 100%;
+  object-fit: contain;
+  z-index: -1;
+  box-sizing: border-box;
+  float: right;
+}
+
+
+.pEditor {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+}
+
+
+.pInfo {
+  padding-left: 10px;
+}
+
+#p1Tag, #p2Tag {
+  float: left;
+  min-width: 34px;
+  max-width: 70px;
+  width: 34px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#p1Name, #p2Name {
+  float: left;
+  min-width: 60px;
+  max-width: 174px;
+  width: 60px;
+  border-radius: 0px;
+}
+
+.pColor {
+  float: left;
+  width: 30px;
+  height: 30px;
+  color: var(--text1);
+  background: var(--bg4);
+  cursor: pointer;
+  position: relative;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border: 1px solid var(--bg4);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.pColor:hover {
+  border-color: var(--selected);
+}
+
+.pColor:focus {
+  border-color: var(--focused);
+  background-color: var(--bg2);
+}
+
+.colorContainer {
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.pColorRect {
+  height: 15px;
+  width: 15px;
+}
+
+.dropdownColor {
+  display: none;
+  position: absolute;
+  background-color: var(--bg5);
+  width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 3;
+  font-size: 15px;
+}
+
+.colorEntry {
+  display: flex;
+  align-items: center;  
+}
+
+.colorEntry:hover {
+  background-color: var(--bg2);
+}
+
+#p1Color:focus #dropdownColorP1,
+#p2Color:focus #dropdownColorP2 {
+  display: block;
+}
+
+
+.scoreInfo {
+  margin-left: 10px;
+  font-family: 'Roboto-Medium';
+  display: flex;
+  align-items: center;
+}
+
+.scoreBox {
+  background-color: var(--bg4);
+  height: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid var(--bg4);
+  transition: border-color 100ms;
+  display: flex;
+  align-items: center;
+  color: var(--text2);
+}
+.scoreBox:hover {
+  border-color: var(--selected);
+}
+
+.scoreCheck {
+  margin-left: 5px;
+  width: 14px;
+  height: 14px;
+  outline: none;
+}
+
+.wlButtons {
+  display: none;
+  font-size: 13px;
+  padding-left: 5px;
+}
+
+.wlBox {
+  background-color: var(--bg4);
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid var(--bg4);
+  transition: border-color 100ms;
+  float: left;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+}
+.wlBox:hover {
+  border-color: var(--selected);
+}
+
+#p1W, #p2W {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#p1W:hover, #p2W:hover {
+  transform: scale(1);
+}
+#p1L, #p2L {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  box-sizing: border-box;
+  padding-left: 7px;
+}
+
+
+.charInfo {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.charSelector {
+  
+}
+
+.charSelectorImg {
+  width: 52px;
+  object-fit: contain;
+  outline: none;
+}
+.charSelectorImg:hover {
+  filter: brightness(1.5);
+}
+
+.skinSelector {
+  margin-left: 5px;
+  padding: 3px;
+  background-color: var(--bg4);
+  height: 30px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid var(--bg4);
+  transition: border-color 100ms;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+}
+.skinSelector:hover {
+  border-color: var(--selected);
+}
+
+.skinIcon {
+  outline: none;
+  padding-bottom: 5px;
+}
+.skinIcon:hover {
+  filter: brightness(1.5); 
+}
+
+#skinListP1, #skinListP2 {
+  margin-top: -1px;
+}
+#skinListP1Sheik, #skinListP2Sheik {
+  margin-top: -5px;
+}
+
+
+#playerSep {
+  width: 2%;
+  height: 100%;
+}
+
+#swapButton {
+  width: 100%;
+  height: 85%;
+  background-color: var(--bg4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#swapButton:hover {
+  filter: brightness(1.3);
+}
+#clearButton {
+  width: 100%;
+  height: 15%;
+  background-color: var(--bg4);
+  cursor: pointer;
+}
+#clearButton:hover {
+  filter: brightness(1.3);
+}
+
+.midIcon {
+  height: 12px;
+  width: 12px;
+  fill: #b6b6b6;
+  opacity: 0;
+  transform: scale(1.5, 1.5);
+  transition: opacity 200ms, transform 200ms;
+}
+#swapButton:hover #swapIcon {
+  opacity: 1;
+  transform: scale(2, 2);
+}
+#clearButton:hover #clearIcon {
+  opacity: 1;
+  transform: scale(2, 2);
+}
+
+
+/* round propierties */
+#roundInfo {
+  height: 40px;
+  border-top: thin;
+  border-bottom: thin;
+  border-style: solid none solid;
+  border-color: var(--bg4);
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bestOf {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.bestOfBox {
+  background-color: var(--bg4);
+  height: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid var(--focused);
+  transition: border-color 100ms;
+  float: left;
+}
+
+.bestOfBox:hover {
+  border-color: var(--selected);
+  transform: scale(1); /* cheap trick to show a correct border */
+}
+
+#bo3Div {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#bo5Div {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin-left: -1px;
+}
+
+#roundName, #tournamentName {
+  width: 100%;
+  text-align: center;
+  margin-right: 4px;
+}
+
+/* caster region */
+#casterInfo {
+  height: 60px;
+  padding: 10px;
+  padding: 8px 10px 12px 10px;
+}
+
+.casterIcon {
+  height: 20px;
+  width: 20px;
+  margin-left: -5px;
+  margin-top: 5px;
+  fill: #b6b6b6;
+}
+
+#twitterIcon {
+  margin-right: 4px;
+  margin-left: 5px;
+}
+#twitchIcon {
+  margin-right: 4px;
+  margin-left: 5px;
+}
+
+#caster1 {
+  padding-bottom: 4px;
+  display: flex;
+  justify-items: center;
+}
+#caster2 {
+  display: flex;
+  justify-items: center;
+}
+
+#cName1, #cName2 {
+  width: 190px;
+  margin-left: 4px;
+}
+
+#cTwitter1, #cTwitter2, #cTwitch1, #cTwitch2 {
+  width: 156px;
+  margin-left: 1px;
+}
+
+/* the bottom bar */
+#botBar {
+  width: 100%;
+  height: 28px;
+  display: flex;
+  background-color: var(--bg5);
+  cursor: pointer;
+}
+
+.botRegion {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.botText {
+  color: var(--text1);
+  font-family: 'Roboto-Medium';
+}
+
+.rectangle {
+  height: 2px;
+  width: 100%;
+  margin: 10px;
+  background-color: var(--text2);
+}
+
+#updateRegion:hover {
+  background-color: var(--bg3);
+}
+
+#updateRegion:active{
+  background-color: var(--bg5);
+}
+
+#settingsRegion {
+  width: 32px;
+  background-color: var(--bg3)
+}
+
+#configIcon {
+  width: 20px;
+  height: 20px;
+}
+
+#configIcon path {
+  fill: var(--text2);
+}
+
+#settingsRegion:hover {
+  background-color: var(--bg1);
+}
+
+#settingsRegion:active{
+  background-color: var(--bg5);
+}
+
+
+/* bracket section */
+#bracket {
+  width: calc(100% / 3);
+  height: 200px;
+}
+
+
+/* settings section */
+#settings {
+  width: calc(100% / 3);
+  height: 300px;
+  background-color: var(--bg5);
+  z-index: 2;
+}
+
+#settingsTitle {
+  width: 40%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto-Medium";
+  border-bottom-style: solid;
+  border-color: var(--bg4);
+}
+
+#actualSettings {
+  width: 40%;
+  padding-top: 5px;
+}
+
+.settingBox {
+  padding: 2px 0px 2px 10px;
+  display: flex;
+  outline: none;
+
+  /* background-color: violet; */
+}
+.settingBox:hover {
+  background-color: var(--bg2);
+}
+
+.settingsCheck {
+  outline: none;
+}
+
+.settingsText {
+  width: 100%;
+}
+
+
+/* clickable area that gets enabled when moving the viewport */
+#goBack {
+  position: absolute;
+  width: calc(100% / 3);
+  height: 300px;
+  left: calc(100% / 3);
+  z-index: 100;
+  display: none;
+}
+
+
+#charRoster {
+  position: absolute;
+  width: calc(100% / 3);
+  height: 300px;
+  left: calc(100% / 3);
+  z-index: 101;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #2b2b2bec;
+  opacity: 0;
+  transform: scale(1.2);
+  transition: opacity 200ms, transform 200ms;
+}
+
+.rosterLine {
+}
+
+.charInRoster:hover {
+  filter: brightness(1.5);
+}

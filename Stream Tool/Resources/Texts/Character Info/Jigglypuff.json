@@ -1,0 +1,10 @@
+{
+    "skinList": [
+        "Default",
+        "Red",
+        "Blue",
+        "Green",
+        "Yellow"
+    ],
+    "saga": "Pokemon"
+}
