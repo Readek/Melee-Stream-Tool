@@ -81,28 +81,23 @@ function getData(scInfo) {
 
 
 		//set p1 character
-		updateChar(p1Character, p1Skin, p1Color, 'charP1', 'trailP1');
+		updateChar(p1Character, p1Skin, p1Color, 'charP1', "Left");
 		//move the character
-		initCharaFade("#charaP1", "#trailP1");
+		initCharaFade("#charaP1");
 		//save character info so we change them later if different
 		p1CharacterPrev = p1Character;
 		p1SkinPrev = p1Skin;
 
 		//same for p2
-		updateChar(p2Character, p2Skin, p2Color, 'charP2', 'trailP2');
-		initCharaFade("#charaP2", "#trailP2");
+		updateChar(p2Character, p2Skin, p2Color, 'charP2', "Right");
+		initCharaFade("#charaP2");
 		p2CharacterPrev = p2Character;
 		p2SkinPrev = p2Skin;
 
-		
-		//set the character backgrounds
-		updateBG('vidBGP1', p1Character, p1Skin);
-		updateBG('vidBGP2', p2Character, p2Skin);
-
 
 		//set the colors
-		updateColor('colorBGP1', 'textBGP1', p1Color);
-		updateColor('colorBGP2', 'textBGP2', p2Color);
+		/* updateColor('colorBGP1', 'textBGP1', p1Color);
+		updateColor('colorBGP2', 'textBGP2', p2Color); */
 		p1ColorPrev = p1Color;
 		p2ColorPrev = p2Color;
 
@@ -151,14 +146,14 @@ function getData(scInfo) {
 		//color change, this is up here before everything else so it doesnt change the
 		//trail to the next one if the character has changed, but it will change its color
 		if (p1ColorPrev != p1Color) {
-			updateColor('colorBGP1', 'textBGP1', p1Color);
-			colorTrail('trailP1', p1CharacterPrev, p1SkinPrev, p1Color);
+			/* updateColor('colorBGP1', 'textBGP1', p1Color);
+			colorTrail('trailP1', p1CharacterPrev, p1SkinPrev, p1Color); */
 			p1ColorPrev = p1Color;
 		}
 
 		if (p2ColorPrev != p2Color) {
-			updateColor('colorBGP2', 'textBGP2', p2Color);
-			colorTrail('trailP2', p2CharacterPrev, p2SkinPrev, p2Color);
+			/* updateColor('colorBGP2', 'textBGP2', p2Color);
+			colorTrail('trailP2', p2CharacterPrev, p2SkinPrev, p2Color); */
 			p2ColorPrev = p2Color;
 		}
 
@@ -191,21 +186,10 @@ function getData(scInfo) {
 			//move and fade out the character
 			charaFadeOut("#charaP1", async () => {
 				//update the character image and trail, and also storing its scale for later
-				let charScale = await updateChar(p1Character, p1Skin, p1Color, 'charP1', 'trailP1');
+				await updateChar(p1Character, p1Skin, p1Color, 'charP1', "Left");
 				//move and fade them back
-				charaFadeIn("#charaP1", "#trailP1", charScale);
+				charaFadeIn("#charaP1");
 			});
-
-			//background change here!
-			if (p1CharacterPrev != p1Character || p1Skin == "Ragnir" || p1SkinPrev == "Ragnir") { //only when different character or ragnir
-				//fade it out
-				fadeOut("#vidBGP1", () => {
-					//update the bg vid
-					updateBG('vidBGP1', p1Character, p1Skin);
-					//fade it back
-					fadeIn("#vidBGP1", .3, fadeInTime+.2);
-				}, fadeOutTime+.2);
-			};
 			
 			p1CharacterPrev = p1Character;
 			p1SkinPrev = p1Skin;
@@ -214,16 +198,9 @@ function getData(scInfo) {
 		//same for player 2
 		if (p2CharacterPrev != p2Character || p2SkinPrev != p2Skin) {
 			charaFadeOut("#charaP2", async () => {
-				let charScale = await updateChar(p2Character, p2Skin, p2Color, 'charP2', 'trailP2');
-				charaFadeIn("#charaP2", "#trailP2", charScale);
+				await updateChar(p2Character, p2Skin, p2Color, 'charP2', "Right");
+				charaFadeIn("#charaP2");
 			});
-			
-			if (p2CharacterPrev != p2Character || p2Skin == "Ragnir" || p2SkinPrev == "Ragnir") {
-				fadeOut("#vidBGP2", () => {
-					updateBG('vidBGP2', p2Character, p2Skin); //update the bg vid
-					fadeIn("#vidBGP2", .3, fadeInTime+.2);
-				}, fadeOutTime+.2);
-			};
 		
 			p2CharacterPrev = p2Character;
 			p2SkinPrev = p2Skin;
@@ -484,24 +461,18 @@ function charaFadeOut(itemID, funct) {
 }
 
 //fade in characters edition
-function charaFadeIn(charaID, trailID, charScale) {
+function charaFadeIn(charaID) {
 	//move the character
 	gsap.to(charaID, {delay: .3, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime+.1});
-	//move the trail
-	gsap.fromTo(trailID,
-		{scale: charScale, x: 0, opacity: 0},
-		{delay: .5, x: -pCharMove, opacity: 1, ease: "power2.out", duration: fadeInTime+.1});
 }
 
 //initial characters fade in
-function initCharaFade(charaID, trailID) {
+function initCharaFade(charaID) {
 	//character movement
 	gsap.fromTo(charaID,
 		{x: -pCharMove, opacity: 0},
 		{delay: introDelay, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
-	//trail movement
-	gsap.to(trailID, {delay: introDelay+.15, x: -pCharMove, opacity: 1, ease: "power2.out", duration: fadeInTime+.1});
-}
+	}
 
 //searches for the main json file
 function getInfo() {
@@ -536,34 +507,25 @@ function getCharInfo(pCharacter) {
 }
 
 //character update!
-async function updateChar(pCharacter, pSkin, color, charID, trailID) {
+async function updateChar(pCharacter, pSkin, color, charID, direction) {
 
 	//store so code looks cleaner later
 	let charEL = document.getElementById(charID);
-	let trailEL = document.getElementById(trailID);
 
 	//this will trigger whenever the image loaded cant be found
 	if (startup) {
 		//if the image fails to load, we will put a placeholder
-		charEL.addEventListener("error", function(){
-			//we need two different images because a "?" flipped looks weird
-			if (charEL == document.getElementById("charP1")) {
-				charEL.setAttribute('src', 'Resources/Characters/Random/P1.png');
+		charEL.addEventListener("error", () => {
+			if (direction == "Left") {
+				charEL.setAttribute('src', 'Resources/Characters/Portraits/Random ' + color + '.png');
 			} else {
-				charEL.setAttribute('src', 'Resources/Characters/Random/P2.png');
+				charEL.setAttribute('src', 'Resources/Characters/Portraits/Random ' + color + '.png');
 			}
 		})
-		//trail will just show nothing
-		trailEL.addEventListener("error", function(){showNothing(trailEL)})
 	}
 
-	//if using an Alt skin, just use the normal version
-	if (pSkin.startsWith("Alt ")) {
-		pSkin = pSkin.substring(4); //removes "Alt " from string
-	}
-
-	//change the image path depending on the character and skin
-	charEL.setAttribute('src', 'Resources/Characters/' + pCharacter + '/' + pSkin + '.png');
+	//change the image path depending on the character, skin and direction
+	charEL.setAttribute('src', 'Resources/Characters/VS Screen/' + pCharacter + '/' + pSkin + ' ' + direction + '.png');
 
 	//get the character positions
 	let charInfo = await getCharInfo(pCharacter);
@@ -571,16 +533,26 @@ async function updateChar(pCharacter, pSkin, color, charID, trailID) {
 	let charPos = [0, 0, 1];
 	//now, check if the character or skin exists in the json file we checked earler
 	if (charInfo != "notFound") {
-		if (charInfo.vsScreen[pSkin]) { //if the skin has a specific position
-			charPos[0] = charInfo.vsScreen[pSkin].x;
-			charPos[1] = charInfo.vsScreen[pSkin].y;
-			charPos[2] = charInfo.vsScreen[pSkin].scale;
-			trailEL.setAttribute('src', 'Resources/Trails/' + pCharacter + '/' + color + ' ' + pSkin + '.png');
-		} else { //if not, use a default position
-			charPos[0] = charInfo.vsScreen.neutral.x;
-			charPos[1] = charInfo.vsScreen.neutral.y;
-			charPos[2] = charInfo.vsScreen.neutral.scale;
-			trailEL.setAttribute('src', 'Resources/Trails/' + pCharacter + '/' + color + '.png');
+		if (direction == "Left") { //player 1 positions
+			if (pSkin.includes("Sheik")) {
+				charPos[0] = charInfo.Left.xSheik;
+				charPos[1] = charInfo.Left.ySheik;
+				charPos[2] = charInfo.Left.scaleSheik;
+			} else {
+				charPos[0] = charInfo.Left.x;
+				charPos[1] = charInfo.Left.y;
+				charPos[2] = charInfo.Left.scale;
+			}
+		} else { //player 2 positions
+			if (pSkin.includes("Sheik")) {
+				charPos[0] = charInfo.Right.xSheik;
+				charPos[1] = charInfo.Right.ySheik;
+				charPos[2] = charInfo.Right.scaleSheik;
+			} else {
+				charPos[0] = charInfo.Right.x;
+				charPos[1] = charInfo.Right.y;
+				charPos[2] = charInfo.Right.scale;
+			}
 		}
 	} else { //if the character isnt on the database, set positions for the "?" image
 		//this condition is used just to position images well on both sides
@@ -590,25 +562,16 @@ async function updateChar(pCharacter, pSkin, color, charID, trailID) {
 			charPos[0] = -175;
 		}
 		charPos[1] = 150; charPos[2] = .8;
-		trailEL.setAttribute('src', 'Resources/Trails/' + pCharacter + '/' + color + '.png');
 	}
 
 	//to position the character
-	charEL.style.objectPosition =  charPos[0] + "px " + charPos[1] + "px";
+	charEL.style.left = charPos[0] + "px";
+	charEL.style.top = charPos[1] + "px";
 	charEL.style.transform = "scale(" + charPos[2] + ")";
-	trailEL.style.objectPosition =  charPos[0] + "px " + charPos[1] + "px";
-	trailEL.style.transform = "scale(" + charPos[2] + ")";
+	
+	
 
-	//to decide scalling
-	if (pSkin == "HD" || pSkin == "LoA") {
-		charEL.style.imageRendering = "auto"; //default scalling
-		trailEL.style.imageRendering = "auto";
-	} else {
-		charEL.style.imageRendering = "pixelated"; //sharp scalling
-		trailEL.style.imageRendering = "pixelated";
-	}
-
-	return charPos[2]; //we need this one to set scale keyframe when fading back
+	/* return charPos[2]; */ //we need this one to set scale keyframe when fading back
 }
 
 //this gets called just to change the color of a trail

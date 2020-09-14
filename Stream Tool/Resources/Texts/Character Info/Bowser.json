@@ -5,5 +5,15 @@
         "Blue",
         "Black"        
     ],
-    "saga": "Mario"
+    "saga": "Mario",
+    "Left": {
+        "x": -50,
+        "y": 160,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 625,
+        "y": 0,
+        "scale": 1.1
+    }
 }

@@ -5,5 +5,15 @@
         "Orange",
         "Red"
     ],
-    "saga": "Ice Climbers"
+    "saga": "Ice Climbers",
+    "Left": {
+        "x": -70,
+        "y": 170,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 650,
+        "y": 0,
+        "scale": 1.2
+    }
 }

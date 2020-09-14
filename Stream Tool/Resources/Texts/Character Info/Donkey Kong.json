@@ -6,5 +6,15 @@
         "Purple",
         "Green"
     ],
-    "saga": "Donkey Kong"
+    "saga": "Donkey Kong",
+    "Left": {
+        "x": -50,
+        "y": 150,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 650,
+        "y": 0,
+        "scale": 1.1
+    }
 }

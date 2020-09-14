@@ -6,5 +6,15 @@
         "Black",
         "White"
     ],
-    "saga": "Zelda"
+    "saga": "Zelda",
+    "Left": {
+        "x": 0,
+        "y": 160,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 700,
+        "y": 0,
+        "scale": 1.3
+    }
 }

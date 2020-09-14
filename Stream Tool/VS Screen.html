@@ -42,7 +42,6 @@
         #oneEighty {
             width: 1920px;
             height: 1080px;
-            clip: rect(0px, 960px, 1080px, 0px);
         }
 
         .mirrorP2 {
@@ -52,15 +51,7 @@
 
 
         #bgVids {
-            filter: grayscale(.8);
-        }
-
-        #vidBGP1 {
-            clip: rect(0px, 960px, 1080px, 0px);
-        }
-
-        #vidBGP2 {
-            clip: rect(0px, 1920px, 1080px, 960px);
+            /* filter: grayscale(.8); */
         }
 
 
@@ -77,15 +68,12 @@
 
         .character {
             position: absolute;
-            width: 1920px;
-            height: 1080px;
-            object-fit: scale-down;
+
         }
 
 
         .wrappers {
             position: absolute;
-            transform: rotate(-3deg);
             width: 940px;
             height: 120px;
             bottom: 90px;
@@ -125,7 +113,7 @@
             height: 50px;
             left: 800px;
             top: 62px;
-            color: black;
+            color: white;
             line-height: 38px;
         }
 
@@ -146,7 +134,7 @@
             top: 130px;
             text-align: center;
             font-family: "Deansgate";
-            color: black;
+            color: white;
             line-height: 26px;
         }
 
@@ -201,35 +189,24 @@
 
 <body>
     <div id="bgVids">
-        <video autoplay loop class="absol" id="vidBGP1"></video>
-        <video autoplay loop class="absol" id="vidBGP2"></video>
-    </div>
-
-    <div id="colorGrads">
-        <img class="absol" id="colorBGP1"/>
-        <img class="mirror" id="colorBGP2"/>
+        <video autoplay loop class="absol" id="vidBGP1" src="Resources/Overlay/VS Screen/VS BG.webm" ></video>
     </div>
 
     <div id="charas">
         <div class="absol" id="oneEighty">
             <div id="charaP1">
-                <img class="character" id="trailP1"/>
                 <img class="character" id="charP1"/>
             </div>
         </div>
 
-        <div class="mirrorP2" id="oneEighty">
+        <div class="absol" id="oneEighty">
             <div id="charaP2">
-                <img class="character" id="trailP2"/>
                 <img class="character" id="charP2"/>
             </div>
         </div>
     </div>
 
-    <div id="textBGs">
-        <img class="absol" id="textBGP1"/>
-        <img class="absol" id="textBGP2"/>
-    </div>
+    <img src="Resources/Overlay/VS Screen/VS Melee.png" class="absol"/>
     
     <div id="playerTexts">
         <span id="p1Wrapper" class="wrappers">
@@ -244,7 +221,6 @@
 
     </div>
 
-    <img src="Resources/Overlay/VS Screen/VS Screen Overlay.png" class="absol"/>
 
     <div id="roundInfo">
         <span id="round" class="roundInfo"></span>
@@ -285,7 +261,7 @@
             </svg>
             <span id="twitch2" class="socialText"></span>
         </span>
-
     </div>
+    
 </body>
 </html>

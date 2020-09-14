@@ -5,5 +5,15 @@
         "Blue",
         "Green"
     ],
-    "saga": "Mr Game & Watch"
+    "saga": "Mr Game & Watch",
+    "Left": {
+        "x": -75,
+        "y": 160,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 600,
+        "y": -25,
+        "scale": 1.2
+    }
 }

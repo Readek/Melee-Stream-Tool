@@ -6,5 +6,15 @@
         "Green",
         "Yellow"
     ],
-    "saga": "Pokemon"
+    "saga": "Pokemon",
+    "Left": {
+        "x": -75,
+        "y": 160,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 525,
+        "y": 0,
+        "scale": 0.8
+    }
 }

@@ -5,5 +5,15 @@
         "Blue",
         "Green"
     ],
-    "saga": "Star Fox"
+    "saga": "Star Fox",
+    "Left": {
+        "x": 0,
+        "y": 160,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 600,
+        "y": 0,
+        "scale": 1.4
+    }
 }

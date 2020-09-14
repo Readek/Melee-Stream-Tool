@@ -7,5 +7,15 @@
         "Green",
         "Blue"
     ],
-    "saga": "F-Zero"
+    "saga": "F-Zero",
+    "Left": {
+        "x": -50,
+        "y": 160,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 900,
+        "y": 0,
+        "scale": 1.4
+    }
 }

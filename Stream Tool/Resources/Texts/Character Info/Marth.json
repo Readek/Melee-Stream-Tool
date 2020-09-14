@@ -6,5 +6,15 @@
         "Black",
         "White"
     ],
-    "saga": "Fire Emblem"
+    "saga": "Fire Emblem",
+    "Left": {
+        "x": -50,
+        "y": 180,
+        "scale": 1.5
+    },
+    "Right": {
+        "x": 700,
+        "y": 0,
+        "scale": 1.1
+    }
 }

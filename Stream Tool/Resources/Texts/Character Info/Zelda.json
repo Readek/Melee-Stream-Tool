@@ -6,5 +6,21 @@
         "Green",
         "Purple"
     ],
-    "saga": "Zelda"
+    "saga": "Zelda",
+    "Left": {
+        "x": 50,
+        "y": 430,
+        "scale": 1.6,
+        "xSheik": 75,
+        "ySheik": 275,
+        "scaleSheik": 1.6
+    },
+    "Right": {
+        "x": 620,
+        "y": 270,
+        "scale": 1.4,
+        "xSheik": 750,
+        "ySheik": 150,
+        "scaleSheik": 1.4
+    }
 }

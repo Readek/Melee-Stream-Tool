@@ -2,7 +2,7 @@
   "p1Name": "Player 1",
   "p1Team": "",
   "p1Character": "Fox",
-  "p1Skin": "Blue",
+  "p1Skin": "Red",
   "p1Color": "Red",
   "p1Score": 2,
   "p1WL": "Nada",
@@ -20,7 +20,7 @@
   "caster1Twitter": "Twitter 1",
   "caster1Twitch": "Twitch 1",
   "caster2Name": "Caster 2",
-  "caster2Twitter": "Twitter 2",
+  "caster2Twitter": "Twittter 2",
   "caster2Twitch": "Twitch 2",
   "allowIntro": false
 }

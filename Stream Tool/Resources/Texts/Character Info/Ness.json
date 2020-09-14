@@ -5,5 +5,15 @@
         "Blue",
         "Green"
     ],
-    "saga": "Mother"
+    "saga": "Mother",
+    "Left": {
+        "x": -75,
+        "y": 165,
+        "scale": 1.4
+    },
+    "Right": {
+        "x": 625,
+        "y": 10,
+        "scale": 1
+    }
 }
