@@ -23,6 +23,8 @@ let socialInt2;
 let twitter1, twitch1, twitter2, twitch2;
 let socialSwitch = true; //true = twitter, false = twitch
 let socialInterval = 12000;
+
+
 let startup = true;
 
 
@@ -253,7 +255,7 @@ async function getData(scInfo) {
 		fadeIn("#teamLogoP2");
 
 
-		//make a sick animation for the scores
+		//play a sick animation for the scores
 		moveScoresIntro(1, bestOf, p1WL, sMove);
 		moveScoresIntro(2, bestOf, p2WL, -sMove);
 
@@ -421,7 +423,10 @@ async function getData(scInfo) {
 		if (document.getElementById('caster1N').textContent != caster1){
 			fadeOut("#caster1TextBox", () => {
 				updateSocialText("caster1N", caster1, casterSize, 'caster1TextBox');
-				fadeIn("#caster1TextBox", .2);
+				//if no caster name, dont fade in the caster icon
+				if (caster1 != "") {
+					fadeIn("#caster1TextBox", .2);
+				}
 			});
 		}
 		//caster 1's twitter
@@ -437,7 +442,9 @@ async function getData(scInfo) {
 		if (document.getElementById('caster2N').textContent != caster2){
 			fadeOut("#caster2TextBox", () => {
 				updateSocialText("caster2N", caster2, casterSize, 'caster2TextBox');
-				fadeIn("#caster2TextBox", .2);
+				if (caster2 != "") {
+					fadeIn("#caster2TextBox", .2);
+				}
 			});
 		}
 		if (document.getElementById('caster2Tr').textContent != twitter2){
@@ -742,7 +749,7 @@ function getFontSize(textElement) {
 	return (parseFloat(textElement.style.fontSize.slice(0, -2)) * .90) + 'px';
 }
 
-//so we can get the exact color used by the game!
+//color codes here!
 function getHexColor(color) {
 	switch (color) {
 		case "Red":

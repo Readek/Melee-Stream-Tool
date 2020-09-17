@@ -7,10 +7,10 @@ let fadeOutTime = .3;
 let introDelay = .5; //all animations will get this delay when the html loads (use this so it times with your transition)
 
 //max text sizes (used when resizing back)
-let roundSize = '38px';
-let tournamentSize = '28px';
-let casterSize = '25px';
-let twitterSize = '20px';
+let roundSize = '54px';
+let tournamentSize = '36px';
+let casterSize = '36px';
+let twitterSize = '26px';
 
 //to avoid the code constantly running the same method over and over
 let p1CharacterPrev, p1SkinPrev, p1ColorPrev;
@@ -21,7 +21,7 @@ let socialInt1;
 let socialInt2;
 let twitter1, twitch1, twitter2, twitch2;
 let socialSwitch = true; //true = twitter, false = twitch
-let socialInterval = 6000;
+let socialInterval = 9000;
 
 
 let startup = true;
@@ -62,11 +62,6 @@ function getData(scInfo) {
 	twitter2 = scInfo['caster2Twitter'];
 	twitch2 = scInfo['caster2Twitch'];
 
-	let forceHD = scInfo['forceHD'];
-	if (forceHD) {
-		p1Skin = 'HD';
-		p2Skin = 'HD';
-	}
 
 	//first, things that will happen only the first time the html loads
 	if (startup) {
@@ -80,24 +75,39 @@ function getData(scInfo) {
 		fadeIn("#p2Wrapper", introDelay+.15);
 
 
+		//change the player info character text
+		document.getElementById('p1CharInfo').textContent = p1Character;
+		document.getElementById('p2CharInfo').textContent = p2Character;
+		//sheik is complicated
+		if (p1Skin.includes("Sheik")) {
+			document.getElementById('p1CharInfo').textContent = "Sheik";
+		}
+		if (p2Skin.includes("Sheik")) {
+			document.getElementById('p2CharInfo').textContent = "Sheik";
+		}
+		//fade it in
+		fadeIn("#p1Info", introDelay+.15);
+		fadeIn("#p2Info", introDelay+.15);
+
+
 		//set p1 character
 		updateChar(p1Character, p1Skin, p1Color, 'charP1', "Left");
 		//move the character
-		initCharaFade("#charaP1");
+		initCharaFade("#charaP1", -pCharMove);
 		//save character info so we change them later if different
 		p1CharacterPrev = p1Character;
 		p1SkinPrev = p1Skin;
 
 		//same for p2
 		updateChar(p2Character, p2Skin, p2Color, 'charP2', "Right");
-		initCharaFade("#charaP2");
+		initCharaFade("#charaP2", pCharMove);
 		p2CharacterPrev = p2Character;
 		p2SkinPrev = p2Skin;
 
 
 		//set the colors
-		/* updateColor('colorBGP1', 'textBGP1', p1Color);
-		updateColor('colorBGP2', 'textBGP2', p2Color); */
+		updateColor('p1Slot', p1Color);
+		updateColor('p2Slot', p2Color);
 		p1ColorPrev = p1Color;
 		p2ColorPrev = p2Color;
 
@@ -108,23 +118,24 @@ function getData(scInfo) {
 		//set the tournament text
 		updateText("tournament", tournamentName, tournamentSize);
 
+
 		//set the caster info
-		updateText("caster1", caster1, casterSize);
-		updateSocialText("twitter1", twitter1, twitterSize, "twitter1Wrapper");
-		updateSocialText("twitch1", twitch1, twitterSize, "twitch1Wrapper");
-		updateText("caster2", caster2, casterSize);
-		updateSocialText("twitter2", twitter2, twitterSize, "twitter2Wrapper");
-		updateSocialText("twitch2", twitch2, twitterSize, "twitch2Wrapper");
+		updateText("caster1N", caster1, casterSize);
+		updateSocialText("caster1Tr", twitter1, twitterSize, "caster1TwitterBox");
+		updateSocialText("caster1Th", twitch1, twitterSize, "caster1TwitchBox");
+		updateText("caster2N", caster2, casterSize);
+		updateSocialText("caster2Tr", twitter2, twitterSize, "caster2TwitterBox");
+		updateSocialText("caster2Th", twitch2, twitterSize, "caster2TwitchBox");
 
 		//setup twitter/twitch change
-		socialChange1("twitter1Wrapper", "twitch1Wrapper");
-		socialChange2("twitter2Wrapper", "twitch2Wrapper");
+		socialChange1("caster1TwitterBox", "caster1TwitchBox");
+		socialChange2("caster2TwitterBox", "caster2TwitchBox");
 		//set an interval to keep changing the names
 		socialInt1 = setInterval( () => {
-			socialChange1("twitter1Wrapper", "twitch1Wrapper");
+			socialChange1("caster1TwitterBox", "caster1TwitchBox");
 		}, socialInterval);
 		socialInt2 = setInterval(() => {
-			socialChange2("twitter2Wrapper", "twitch2Wrapper");
+			socialChange2("caster2TwitterBox", "caster2TwitchBox");
 		}, socialInterval);
 
 		//keep changing this boolean for the previous intervals ()
@@ -134,7 +145,7 @@ function getData(scInfo) {
 			} else {
 				socialSwitch = true;
 			}
-		}, 6000);
+		}, socialInterval);
 
 
 		startup = false; //next time we run this function, it will skip all we just did
@@ -142,21 +153,6 @@ function getData(scInfo) {
 
 	//now things that will happen constantly
 	else {
-
-		//color change, this is up here before everything else so it doesnt change the
-		//trail to the next one if the character has changed, but it will change its color
-		if (p1ColorPrev != p1Color) {
-			/* updateColor('colorBGP1', 'textBGP1', p1Color);
-			colorTrail('trailP1', p1CharacterPrev, p1SkinPrev, p1Color); */
-			p1ColorPrev = p1Color;
-		}
-
-		if (p2ColorPrev != p2Color) {
-			/* updateColor('colorBGP2', 'textBGP2', p2Color);
-			colorTrail('trailP2', p2CharacterPrev, p2SkinPrev, p2Color); */
-			p2ColorPrev = p2Color;
-		}
-
 
 		//player 1 name change
 		if (document.getElementById('p1Name').textContent != p1Name ||
@@ -180,16 +176,30 @@ function getData(scInfo) {
 		}
 
 
-		//player 1 character, skin and background change
+		//player 1 character and skin
 		if (p1CharacterPrev != p1Character || p1SkinPrev != p1Skin) {
 
 			//move and fade out the character
-			charaFadeOut("#charaP1", async () => {
-				//update the character image and trail, and also storing its scale for later
+			charaFadeOut("#charaP1", -pCharMove, async () => {
+				//update the character image
 				await updateChar(p1Character, p1Skin, p1Color, 'charP1', "Left");
 				//move and fade them back
 				charaFadeIn("#charaP1");
 			});
+
+			//change the player info text if the character is different or if changing between Zelda and Sheik
+			if (p1CharacterPrev != p1Character ||
+				(p1CharacterPrev == "Zelda" && p1Skin.includes("Sheik")) ||
+				(p1Character == "Zelda" && p1SkinPrev.includes("Sheik"))) {
+				fadeOut('#p1Info', () => {
+					document.getElementById('p1CharInfo').textContent = p1Character;
+					//sheik is complicated
+					if (p1Skin.includes("Sheik")) {
+						document.getElementById('p1CharInfo').textContent = "Sheik";
+					}
+					fadeIn('#p1Info');
+				});
+			}
 			
 			p1CharacterPrev = p1Character;
 			p1SkinPrev = p1Skin;
@@ -197,13 +207,43 @@ function getData(scInfo) {
 
 		//same for player 2
 		if (p2CharacterPrev != p2Character || p2SkinPrev != p2Skin) {
-			charaFadeOut("#charaP2", async () => {
+			charaFadeOut("#charaP2", pCharMove, async () => {
 				await updateChar(p2Character, p2Skin, p2Color, 'charP2', "Right");
 				charaFadeIn("#charaP2");
 			});
+
+			if (p2CharacterPrev != p2Character ||
+				(p2CharacterPrev == "Zelda" && p2Skin.includes("Sheik")) ||
+				(p2Character == "Zelda" && p2SkinPrev.includes("Sheik"))) {
+				fadeOut('#p2Info', () => {
+					document.getElementById('p2CharInfo').textContent = p2Character;
+					if (p2Skin.includes("Sheik")) {
+						document.getElementById('p2CharInfo').textContent = "Sheik";
+					}
+					fadeIn('#p2Info');
+				});
+			}
 		
 			p2CharacterPrev = p2Character;
 			p2SkinPrev = p2Skin;
+		}
+
+
+		//color change
+		if (p1ColorPrev != p1Color) {
+			fadeOut('#p1Slot', () => {
+				updateColor('p1Slot', p1Color);
+				fadeIn('#p1Slot');
+			});
+			p1ColorPrev = p1Color;
+		}
+
+		if (p2ColorPrev != p2Color) {
+			fadeOut('#p2Slot', () => {
+				updateColor('p2Slot', p2Color);
+				fadeIn('#p2Slot');
+			});
+			p2ColorPrev = p2Color;
 		}
 
 
@@ -225,55 +265,39 @@ function getData(scInfo) {
 
 
 		//update caster 1 info
-		if (document.getElementById('caster1').textContent != caster1){
-			fadeOut("#caster1", () => {
-				updateText("caster1", caster1, casterSize);
-				fadeIn("#caster1", .2);
+		if (document.getElementById('caster1N').textContent != caster1){
+			fadeOut("#caster1TextBox", () => {
+				updateSocialText("caster1N", caster1, casterSize, 'caster1TextBox');
+				//if no caster name, dont fade in the caster icon
+				if (caster1 != "") {
+					fadeIn("#caster1TextBox", .2);
+				}
 			});
 		}
 		//caster 1's twitter
-		if (document.getElementById('twitter1').textContent != twitter1){
-			fadeOut("#twitter1Wrapper", () => {
-				updateSocialText("twitter1", twitter1, twitterSize, "twitter1Wrapper");
-				//check if its twitter's turn to show up
-				if (socialSwitch) {
-					fadeIn("#twitter1Wrapper", .2);
-				}
-			});
+		if (document.getElementById('caster1Tr').textContent != twitter1){
+			updateSocial(twitter1, "caster1Tr", "caster1TwitterBox", twitch1, "caster1TwitchBox");
 		}
 		//caster 2's twitch (same as above)
-		if (document.getElementById('twitch1').textContent != twitch1){
-			fadeOut("#twitch1Wrapper", () => {
-				updateSocialText("twitch1", twitch1, twitterSize, "twitch1Wrapper");
-				if (!socialSwitch) {
-					fadeIn("#twitch1Wrapper", .2);
-				}
-			});	
+		if (document.getElementById('caster1Th').textContent != twitch1){
+			updateSocial(twitch1, "caster1Th", "caster1TwitchBox", twitter1, "caster1TwitterBox");
 		}
 
 		//caster 2, same as above
-		if (document.getElementById('caster2').textContent != caster2){
-			fadeOut("#caster2", () => {
-				updateText("caster2", caster2, casterSize);
-				fadeIn("#caster2", .2);
-			});
-		}
-		if (document.getElementById('twitter2').textContent != twitter2){
-			fadeOut("#twitter2Wrapper", () => {
-				updateSocialText("twitter2", twitter2, twitterSize, "twitter2Wrapper");
-				if (socialSwitch) {
-					fadeIn("#twitter2Wrapper", .2);
+		if (document.getElementById('caster2N').textContent != caster2){
+			fadeOut("#caster2TextBox", () => {
+				updateSocialText("caster2N", caster2, casterSize, 'caster2TextBox');
+				if (caster2 != "") {
+					fadeIn("#caster2TextBox", .2);
 				}
 			});
+		}
+		if (document.getElementById('caster2Tr').textContent != twitter2){
+			updateSocial(twitter2, "caster2Tr", "caster2TwitterBox", twitch2, "caster2TwitchBox");
 		}
 
-		if (document.getElementById('twitch2').textContent != twitch2){
-			fadeOut("#twitch2Wrapper", () => {
-				updateSocialText("twitch2", twitch2, twitterSize, "twitch2Wrapper");
-				if (!socialSwitch) {
-					fadeIn("#twitch2Wrapper", .2);
-				}
-			});
+		if (document.getElementById('caster2Th').textContent != twitch2){
+			updateSocial(twitch2, "caster2Th", "caster2TwitchBox", twitter2, "caster2TwitterBox");
 		}
 	}
 }
@@ -285,47 +309,40 @@ function showNothing(itemEL) {
 }
 
 //color change
-function updateColor(gradID, textBGID, color) {
-	let gradEL = document.getElementById(gradID);
-	//change the color gradient image path depending on the color
-	gradEL.setAttribute('src', 'Resources/Overlay/VS Screen/Grad ' + color + '.png');
-	//did that path not work? show absolutely nothing
-	if (startup) {gradEL.addEventListener("error", function(){showNothing(gradEL)})}
+function updateColor(pSlotID, color) {
+	const pSlotEL = document.getElementById(pSlotID);
+	pSlotEL.style.color = getHexColor(color);
 
-	//same but with the text background
-	let textBGEL = document.getElementById(textBGID);
-	textBGEL.setAttribute('src', 'Resources/Overlay/VS Screen/Text BG ' + color + '.png');
-	if (startup) {textBGEL.addEventListener("error", function(){showNothing(textBGEL)})}
-}
-
-//background change
-async function updateBG(vidID, pCharacter, pSkin) {
-	let vidEL = document.getElementById(vidID);
-
-	if (startup) {
-		//if the video cant be found, show aethereal gates
-		vidEL.addEventListener("error", function(){
-			vidEL.setAttribute('src', 'Resources/Backgrounds/Default.webm')
-		});
+	switch (color) {
+		case "Red":
+			pSlotEL.textContent = "P1"; break;
+		case "Blue":
+			pSlotEL.textContent = "P2"; break;
+		case "Yellow":
+			pSlotEL.textContent = "P3"; break;
+		case "Green":
+			pSlotEL.textContent = "P4"; break;
+		case "CPU":
+			pSlotEL.textContent = "CPU"; break;
+		default:
+			pSlotEL.textContent = "??";
 	}
-
-	//get character info for later
-	let charInfo = await getCharInfo(pCharacter);
-
-	//change the BG path depending on the character
-	if (pSkin == "Ragnir") { //yes, ragnir is the only skin that changes bg
-		vidEL.setAttribute('src', 'Resources/Backgrounds/Default.webm');
-	} else {
-		let vidName;
-		if (charInfo != "notFound") { //safety check
-			if (charInfo.vsScreen["background"]) { //if the character has a specific BG
-				vidName = charInfo.vsScreen["background"];
-			} else { //if not, just use the character name
-				vidName = pCharacter;
-			}
-		}
-		//actual video path change
-		vidEL.setAttribute('src', 'Resources/Backgrounds/' + vidName + '.webm');
+}
+//color codes here!
+function getHexColor(color) {
+	switch (color) {
+		case "Red":
+			return "#e54c4c";
+		case "Blue":
+			return "#4b4ce5";
+		case "Yellow":
+			return "#ffcb00";
+		case "Green":
+			return "#00b200";
+		case "CPU":
+			return "#808080";
+		default:
+			return "#808080";
 	}
 }
 
@@ -397,14 +414,39 @@ function socialChange2(twitterWrapperID, twitchWrapperID) {
 
 	}
 }
+//function to decide when to change to what
+function updateSocial(mainSocial, mainText, mainBox, otherSocial, otherBox) {
+	//check if this is for twitch or twitter
+	let localSwitch = socialSwitch;
+	if (mainText == "caster1Th" || mainText == "caster2Th") {
+		localSwitch = !localSwitch;
+	}
+	//check if this is their turn so we fade out the other one
+	if (localSwitch) {
+		fadeOut("#"+otherBox, () => {})
+	}
+
+	//now do the classics
+	fadeOut("#"+mainBox, () => {
+		updateSocialText(mainText, mainSocial, twitterSize, mainBox);
+		//check if its twitter's turn to show up
+		if (otherSocial == "" && mainSocial != "") {
+			fadeIn("#"+mainBox, .2);
+		} else if (localSwitch && mainSocial != "") {
+			fadeIn("#"+mainBox, .2);
+		} else if (otherSocial != "") {
+			fadeIn("#"+otherBox, .2);
+		}
+	});
+}
 
 //player text change
 function updatePlayerName(wrapperID, nameID, teamID, pName, pTeam) {
 	let nameEL = document.getElementById(nameID);
-	nameEL.style.fontSize = '90px'; //set original text size
+	nameEL.style.fontSize = '80px'; //set original text size
 	nameEL.textContent = pName; //change the actual text
 	let teamEL = document.getElementById(teamID);
-	teamEL.style.fontSize = '50px';
+	teamEL.style.fontSize = '40px';
 	teamEL.textContent = pTeam;
 
 	resizeText(document.getElementById(wrapperID)); //resize if it overflows
@@ -456,8 +498,8 @@ function fadeIn(itemID, timeDelay, dur = fadeInTime) {
 }
 
 //fade out for the characters
-function charaFadeOut(itemID, funct) {
-	gsap.to(itemID, {delay: .2, x: -pCharMove, opacity: 0, ease: "power1.in", duration: fadeOutTime, onComplete: funct});
+function charaFadeOut(itemID, charMove, funct) {
+	gsap.to(itemID, {delay: .2, x: charMove, opacity: 0, ease: "power1.in", duration: fadeOutTime, onComplete: funct});
 }
 
 //fade in characters edition
@@ -467,10 +509,10 @@ function charaFadeIn(charaID) {
 }
 
 //initial characters fade in
-function initCharaFade(charaID) {
+function initCharaFade(charaID, charMove) {
 	//character movement
 	gsap.fromTo(charaID,
-		{x: -pCharMove, opacity: 0},
+		{x: charMove, opacity: 0},
 		{delay: introDelay, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
 	}
 
@@ -557,32 +599,16 @@ async function updateChar(pCharacter, pSkin, color, charID, direction) {
 	} else { //if the character isnt on the database, set positions for the "?" image
 		//this condition is used just to position images well on both sides
 		if (charEL == document.getElementById("charP1")) {
-			charPos[0] = -150; 
+			charPos[0] = 400;
 		} else {
-			charPos[0] = -175;
+			charPos[0] = 1400;
 		}
-		charPos[1] = 150; charPos[2] = .8;
+		charPos[1] = 425;
+		charPos[2] = 4;
 	}
 
 	//to position the character
 	charEL.style.left = charPos[0] + "px";
 	charEL.style.top = charPos[1] + "px";
 	charEL.style.transform = "scale(" + charPos[2] + ")";
-	
-	
-
-	/* return charPos[2]; */ //we need this one to set scale keyframe when fading back
-}
-
-//this gets called just to change the color of a trail
-async function colorTrail(trailID, pCharacter, pSkin, color) {
-	let trailEL = document.getElementById(trailID);
-	let charInfo = await getCharInfo(pCharacter);
-	if (charInfo != "notFound") {
-		if (charInfo.vsScreen[pSkin]) {
-			trailEL.setAttribute('src', 'Resources/Trails/' + pCharacter + '/' + color + ' ' + pSkin + '.png');
-		} else {
-			trailEL.setAttribute('src', 'Resources/Trails/' + pCharacter + '/' + color + '.png');
-		}
-	}
 }
