@@ -12,10 +12,9 @@ let p2CharacterPrev, p2SkinPrev, p2ScorePrev, p2ColorPrev, p2wlPrev;
 let bestOfPrev;
 
 //max text sizes (used when resizing back)
-/* let roundSize = '38px'; */
-let tournamentSize = '28px';
-let casterSize = '22px';
-let twitterSize = '18px';
+let roundSize = '32px';
+let casterSize = '24px';
+let twitterSize = '20px';
 
 //variables for the twitter/twitch constant change
 let socialInt1;
@@ -624,7 +623,7 @@ function updatePlayerName(wrapperID, nameID, teamID, pName, pTeam) {
 //round change
 function updateRound(round) {
 	let roundEL = document.getElementById('round');
-	roundEL.style.fontSize = '30px'; //set original text size
+	roundEL.style.fontSize = roundSize; //set original text size
 	roundEL.textContent = round; //change the actual text
 	resizeText(roundEL); //resize it if it overflows
 }
