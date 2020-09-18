@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RoA VS Screen</title>
+    <title>Melee VS Screen</title>
 
     <script src="Resources/Scripts/VS Screen.js"></script>
     <script src="Resources/Scripts/gsap.min.js"></script>
@@ -41,32 +41,6 @@
             position: absolute;
         }
 
-        .mirror {
-            position: absolute;
-            transform: scaleX(-1);
-        }
-
-        #oneEighty {
-            width: 1920px;
-            height: 1080px;
-        }
-
-        .mirrorP2 {
-            position: absolute;
-            transform: rotateY(182deg);
-        }
-
-
-        #textBGP1 {
-            bottom: 0px;
-            left: 0px;
-        }
-
-        #textBGP2 {
-            bottom: 0px;
-            right: -2px;
-        }
-
 
         .character {
             position: absolute;
@@ -94,7 +68,6 @@
         .name {
             color: white;
         }
-
         .team {
             color: lightgray;
         }
@@ -217,17 +190,17 @@
 
 <body>
     <div id="bgVids">
-        <video autoplay loop class="absol" id="vidBGP1" src="Resources/Overlay/VS Screen/VS BG.webm" ></video>
+        <video autoplay loop class="absol" src="Resources/Overlay/VS Screen/VS BG.webm" ></video>
     </div>
 
     <div id="charas">
-        <div class="absol" id="oneEighty">
+        <div class="absol">
             <div id="charaP1">
                 <img class="character" id="charP1"/>
             </div>
         </div>
 
-        <div class="absol" id="oneEighty">
+        <div class="absol">
             <div id="charaP2">
                 <img class="character" id="charP2"/>
             </div>

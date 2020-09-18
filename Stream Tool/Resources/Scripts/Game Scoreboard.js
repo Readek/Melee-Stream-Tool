@@ -1,9 +1,9 @@
 //animation stuff
-let pMove = 20; //distance to move for most of the animations
-let sMove = 40; //distance for the score assets
+const pMove = 20; //distance to move for most of the animations
+const sMove = 40; //distance for the score assets
 
-let fadeInTime = .3; //(seconds)
-let fadeOutTime = .2;
+const fadeInTime = .3; //(seconds)
+const fadeOutTime = .2;
 let introDelay = .8; //all animations will get this delay when the html loads (use this so it times with your transition)
 
 //to avoid the code constantly running the same method over and over
@@ -12,16 +12,16 @@ let p2CharacterPrev, p2SkinPrev, p2ScorePrev, p2ColorPrev, p2wlPrev;
 let bestOfPrev;
 
 //max text sizes (used when resizing back)
-let roundSize = '32px';
-let casterSize = '24px';
-let twitterSize = '20px';
+const roundSize = '32px';
+const casterSize = '24px';
+const twitterSize = '20px';
 
 //variables for the twitter/twitch constant change
 let socialInt1;
 let socialInt2;
 let twitter1, twitch1, twitter2, twitch2;
 let socialSwitch = true; //true = twitter, false = twitch
-let socialInterval = 12000;
+const socialInterval = 12000;
 
 
 let startup = true;
@@ -31,7 +31,7 @@ window.onload = init;
 
 function init() {
 	async function mainLoop() {
-		let scInfo = await getInfo();
+		const scInfo = await getInfo();
 		getData(scInfo);
 	}
 
@@ -70,11 +70,11 @@ async function getData(scInfo) {
 	//first, things that will happen only the first time the html loads
 	if (startup) {
 		//of course, we have to start with the cool intro stuff
-		let allowIntro = scInfo['allowIntro']; //to know if the intro is allowed
+		const allowIntro = scInfo['allowIntro']; //to know if the intro is allowed
 		if (allowIntro) {
 
-			//get the variables only used in the intro
-			let tournamentName = scInfo['tournamentName'];
+			//this variable is only used in the intro
+			const tournamentName = scInfo['tournamentName'];
 
 			//lets see that intro
 			document.getElementById('overlayIntro').style.opacity = 1;
@@ -87,8 +87,8 @@ async function getData(scInfo) {
 
 			if (p1Score + p2Score == 0) { //if this is the first game, introduce players
 
-				let p1IntroEL = document.getElementById('p1Intro');
-				let p2IntroEL = document.getElementById('p2Intro');
+				const p1IntroEL = document.getElementById('p1Intro');
+				const p2IntroEL = document.getElementById('p2Intro');
 
 				p1IntroEL.textContent = p1Name; //update player 1 intro text
 				p1IntroEL.style.fontSize = '85px'; //resize the font to its max size
@@ -112,7 +112,7 @@ async function getData(scInfo) {
 					{delay: introDelay, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
 
 			} else { //if its not the first game, show game count
-				let midTextEL = document.getElementById('midTextIntro');
+				const midTextEL = document.getElementById('midTextIntro');
 				if ((p1Score + p2Score) != 4) { //if its not the last game of a bo5
 
 					//just show the game count in the intro
@@ -121,13 +121,9 @@ async function getData(scInfo) {
 				} else { //if game 5
 
 					if ((round.toUpperCase() == "True Finals".toUpperCase())) { //if true finals
-
 						midTextEL.textContent = "True Final Game"; //i mean shit gets serious here
-						
 					} else {
-
 						midTextEL.textContent = "Final Game";
-						
 						//if GF, we dont know if its the last game or not, right?
 						if (round.toLocaleUpperCase() == "Grand Finals".toLocaleUpperCase() && !(p1WL == "L" && p2WL == "L")) {
 							gsap.to("#superCoolInterrogation", {delay: introDelay+.5, opacity: 1, ease: "power2.out", duration: 1.5});
@@ -155,12 +151,12 @@ async function getData(scInfo) {
 		updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', p1Name, p1Team);
 		//sets the starting position for the player text, then fades in and moves the p1 text to the next keyframe
 		gsap.fromTo("#p1Wrapper", 
-			{x: pMove}, //from
+			{x: -pMove}, //from
 			{delay: introDelay+.1, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime}); //to
 
-		//set the character image for the player
+		//set the character image and saga icon for the player
 		await updateChar(p1Character, p1Skin, 'p1Character', 'sagaIconP1');
-		//when the image finishes loading, fade-in-move the character icon to the overlay
+		//when the image finishes loading, fade-in-move the images to the overlay
 		initCharaFade("#p1Character", "#sagaIconP1", -pMove);
 		//save the character/skin so we run the character change code only when this doesnt equal to the next
 		p1CharacterPrev = p1Character;
@@ -173,6 +169,9 @@ async function getData(scInfo) {
 
 		//set the current score
 		updateScore(1, p1Score, p1Color);
+		//play a sick animation for the score ticks
+		moveScoresIntro(1, bestOf, p1WL, sMove);
+		//yeah same thing here
 		p1ScorePrev = p1Score;
 
 		//set the color
@@ -195,6 +194,7 @@ async function getData(scInfo) {
 		p2wlPrev = p2WL;
 
 		updateScore(2, p2Score, p2Color);
+		moveScoresIntro(2, bestOf, p2WL, -sMove);
 		p2ScorePrev = p2Score;
 
 		updateColor('p2Color', 'p2Name', p2Color);
@@ -236,7 +236,7 @@ async function getData(scInfo) {
 			socialChange2("caster2TwitterBox", "caster2TwitchBox");
 		}, socialInterval);
 
-		//keep changing this boolean for the previous intervals ()
+		//keep changing this boolean for the previous intervals
 		setInterval(() => {
 			if (socialSwitch) { //true = twitter, false = twitch
 				socialSwitch = false;
@@ -252,11 +252,6 @@ async function getData(scInfo) {
 		//animate them
 		fadeIn("#teamLogoP1");
 		fadeIn("#teamLogoP2");
-
-
-		//play a sick animation for the scores
-		moveScoresIntro(1, bestOf, p1WL, sMove);
-		moveScoresIntro(2, bestOf, p2WL, -sMove);
 
 
 		startup = false; //next time we run this function, it will skip all we just did
@@ -281,7 +276,7 @@ async function getData(scInfo) {
 		if (p1CharacterPrev != p1Character || p1SkinPrev != p1Skin) {
 			//fade out the images while also moving them because that always looks cool
 			fadeOutChara("#p1Character", "#sagaIconP1", -pMove, async () => {
-				//now that nobody can see it, lets change the images!
+				//now that nobody can see them, lets change the images!
 				updateChar(p1Character, p1Skin, 'p1Character', 'sagaIconP1'); //will return scale
 				//and now, fade them in
 				fadeInChara("#p1Character", '#sagaIconP1');
@@ -341,7 +336,7 @@ async function getData(scInfo) {
 
 		if (p2CharacterPrev != p2Character || p2SkinPrev != p2Skin) {
 			fadeOutChara("#p2Character", "#sagaIconP2", -pMove, async () => {
-				updateChar(p2Character, p2Skin, 'p2Character', 'sagaIconP2'); //will return scale
+				updateChar(p2Character, p2Skin, 'p2Character', 'sagaIconP2');
 				fadeInChara("#p2Character", "#sagaIconP2", -pMove);
 			});
 			p2CharacterPrev = p2Character;
@@ -491,10 +486,10 @@ function scoreChange(scoreEL, color) {
 	gsap.to(scoreEL, {delay: fadeInTime, fill: color, duration: fadeInTime})
 }
 
-
+//updates the player's text and portrait background colors
 function updateColor(colorID, textID, pColor) {
-	let colorEL = document.getElementById(colorID);
-	let textEL = document.getElementById(textID);
+	const colorEL = document.getElementById(colorID);
+	const textEL = document.getElementById(textID);
 
 	gsap.to(colorEL, {backgroundColor: getHexColor(pColor), duration: fadeInTime});
 	gsap.to(textEL, {color: getHexColor(pColor), duration: fadeInTime});
@@ -509,7 +504,7 @@ function updateBorder(bestOf) {
 //team logo change
 function updateTeamLogo(logoID, pTeam) {
 	//search for an image with the team name
-	let logoEL = document.getElementById(logoID);
+	const logoEL = document.getElementById(logoID);
 	logoEL.setAttribute('src', 'Resources/TeamLogos/' + pTeam + '.png');
 	//no image? show nothing
 	if (startup) {logoEL.addEventListener("error", () => {showNothing(logoEL)})}
@@ -611,10 +606,10 @@ function updateSocial(mainSocial, mainText, mainBox, otherSocial, otherBox) {
 
 //player text change
 function updatePlayerName(wrapperID, nameID, teamID, pName, pTeam) {
-	let nameEL = document.getElementById(nameID);
+	const nameEL = document.getElementById(nameID);
 	nameEL.style.fontSize = '30px'; //set original text size
 	nameEL.textContent = pName; //change the actual text
-	let teamEL = document.getElementById(teamID);
+	const teamEL = document.getElementById(teamID);
 	teamEL.style.fontSize = '20px';
 	teamEL.textContent = pTeam;
 	resizeText(document.getElementById(wrapperID)); //resize if it overflows
@@ -622,7 +617,7 @@ function updatePlayerName(wrapperID, nameID, teamID, pName, pTeam) {
 
 //round change
 function updateRound(round) {
-	let roundEL = document.getElementById('round');
+	const roundEL = document.getElementById('round');
 	roundEL.style.fontSize = roundSize; //set original text size
 	roundEL.textContent = round; //change the actual text
 	resizeText(roundEL); //resize it if it overflows
@@ -630,14 +625,14 @@ function updateRound(round) {
 
 //generic text changer
 function updateText(textID, textToType, maxSize) {
-	let textEL = document.getElementById(textID);
+	const textEL = document.getElementById(textID);
 	textEL.style.fontSize = maxSize; //set original text size
 	textEL.textContent = textToType; //change the actual text
 	resizeText(textEL); //resize it if it overflows
 }
 //social text changer
 function updateSocialText(textID, textToType, maxSize, wrapper) {
-	let textEL = document.getElementById(textID);
+	const textEL = document.getElementById(textID);
 	textEL.style.fontSize = maxSize; //set original text size
 	textEL.textContent = textToType; //change the actual text
 	const wrapperEL = document.getElementById(wrapper)
@@ -671,7 +666,7 @@ function fadeInMove(itemID) {
 	gsap.to(itemID, {delay: .3, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
 }
 
-//fade in but for the character image
+//fade in but for the character/saga icon
 function fadeInChara(itemID, sagaID, move = pMove) {
 	gsap.to(itemID, {delay: .2, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
 	gsap.fromTo(sagaID,
@@ -718,7 +713,7 @@ function moveScoresIntro(pNum, bestOf, pWL, move) {
 
 //check if winning or losing in a GF, then change image
 function updateWL(pWL, playerNum) {
-	let pWLEL = document.getElementById('wlP' + playerNum + 'Text');
+	const pWLEL = document.getElementById('wlP' + playerNum + 'Text');
 	if (pWL == "W") {
 		pWLEL.setAttribute('src', 'Resources/Overlay/[W].png')
 	} else if (pWL == "L") {
@@ -731,7 +726,7 @@ function updateWL(pWL, playerNum) {
 
 //text resize, keeps making the text smaller until it fits
 function resizeText(textEL) {
-	let childrens = textEL.children;
+	const childrens = textEL.children;
 	while (textEL.scrollWidth > textEL.offsetWidth || textEL.scrollHeight > textEL.offsetHeight) {
 		if (childrens.length > 0) { //for team+player texts
 			Array.from(childrens).forEach(function (child) {
@@ -742,7 +737,6 @@ function resizeText(textEL) {
 		}
 	}
 }
-
 //returns a smaller fontSize for the given element
 function getFontSize(textElement) {
 	return (parseFloat(textElement.style.fontSize.slice(0, -2)) * .90) + 'px';
@@ -769,7 +763,7 @@ function getHexColor(color) {
 //searches for the main json file
 function getInfo() {
 	return new Promise(function (resolve) {
-		let oReq = new XMLHttpRequest();
+		const oReq = new XMLHttpRequest();
 		oReq.addEventListener("load", reqListener);
 		oReq.open("GET", 'Resources/Texts/ScoreboardInfo.json');
 		oReq.send();
@@ -785,7 +779,7 @@ function getInfo() {
 //searches for a json file with character data
 function getCharInfo(pCharacter) {
 	return new Promise(function (resolve) {
-		let oReq = new XMLHttpRequest();
+		const oReq = new XMLHttpRequest();
 		oReq.addEventListener("load", reqListener);
 		oReq.onerror = () => {resolve("notFound")}; //for obs local file browser sources
 		oReq.open("GET", 'Resources/Texts/Character Info/' + pCharacter + '.json');
@@ -798,14 +792,18 @@ function getCharInfo(pCharacter) {
 	})
 }
 
-//change of character, pretty simple
+//character portrait and saga icon change
 async function updateChar(pCharacter, pSkin, charID, sagaID) {
 	const charEL = document.getElementById(charID);
 	//change the image path depending on the character and skin
 	charEL.setAttribute('src', 'Resources/Characters/Portraits/' + pCharacter + '/' + pSkin + '.png');
 	//add a listener to show the random portrait if the image fails to load
 	if (startup) {charEL.addEventListener("error", () => {
-		charEL.setAttribute('src', 'Resources/Characters/Portraits/Random CPU.png')
+		if (charEL == document.getElementById("p1Character")) {
+			charEL.setAttribute('src', 'Resources/Characters/Portraits/Random CPU.png');
+		} else {
+			charEL.setAttribute('src', 'Resources/Characters/Portraits/Random CPU 2.png');
+		}
 	})}
 
 	//update the saga icon depending on the character

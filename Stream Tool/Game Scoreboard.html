@@ -70,12 +70,6 @@
             top: 17px;
         }
 
-        .scoreboardP2Fixed {
-            position: absolute;
-            right: 0px;
-            top: 0px;
-        }
-
         .rect {
             width: 257px;
             height: 355px;
@@ -93,22 +87,19 @@
 
         .pCharacter {
             position: absolute;
+            top: 0px;
             width: 257px;
             height: 355px;
             opacity: 0;
         }
         #p1Character {
-            position: absolute;
-            top: 0px;
             left: 0px;
         }
         #p2Character {
-            position: absolute;
-            top: 0px;
             right: 0px;
         }
 
-        #p1CharaMask, #p2CharaMask {
+        .pCharaMask {
             position: absolute;
             width: 257px;
             height: 355px;
@@ -153,18 +144,16 @@
             height: 54px;
             line-height: 54px;
             text-align: center;
-            top: 0px;
+            top: 356px;
             opacity: 0;
             color: black;
         }
 
         #p1Wrapper {
-            top: 356px;
             left: 5px;
         }
 
         #p2Wrapper {
-            top: 356px;
             right: 5px;
         }
 
@@ -182,38 +171,31 @@
         }
         .scoreTick {
             position: absolute;
+            opacity: 0;
         }
         #win1P1 {
             left: 248px;
-            opacity: 0;
         }
         #win2P1 {
             left: 213px;
-            opacity: 0;
         }
         #win3P1 {
             left: 178px;
-            opacity: 0;
         }
         #wlP1 {
             left: 64px;
-            opacity: 0;
         }
         #win1P2 {
             right: 248px;
-            opacity: 0;
         }
         #win2P2 {
             right: 213px;
-            opacity: 0;
         }
         #win3P2 {
             right: 178px;
-            opacity: 0;
         }
         #wlP2 {
             right: 144px;
-            opacity: 0;
         }
 
 
@@ -415,11 +397,11 @@
 
 
     <div id="overlayP1" class="scoreboardP1">
-        <img src="Resources/Overlay/Character Border.png" style="position: absolute;"/>
+        <img src="Resources/Overlay/Character Border.png" class="absol">
 
         <div class="rect" id="p1Color"></div>
         <img class="sagaIcon" id="sagaIconP1">
-        <div id=p1CharaMask>
+        <div class="pCharaMask">
             <img id="p1Character" class="pCharacter">
         </div>
 
@@ -465,7 +447,7 @@
 
         <div class="rect" id="p2Color"></div>
         <img class="sagaIcon" id="sagaIconP2">
-        <div id=p2CharaMask>
+        <div class="pCharaMask">
             <div class="mirror absol">
                 <img id="p2Character" class="pCharacter"/>
             </div>
@@ -596,5 +578,6 @@
 
         <span id="superCoolInterrogation">?</span>
     </div>
+    
 </body>
 </html>

@@ -1,16 +1,16 @@
 
 //animation stuff
-let pCharMove = 30; //distance to move for the character images
+const pCharMove = 30; //distance to move for the character images
 
-let fadeInTime = .4; //(seconds)
-let fadeOutTime = .3;
-let introDelay = .5; //all animations will get this delay when the html loads (use this so it times with your transition)
+const fadeInTime = .4; //(seconds)
+const fadeOutTime = .3;
+const introDelay = .5; //all animations will get this delay when the html loads (use this so it times with your transition)
 
 //max text sizes (used when resizing back)
-let roundSize = '54px';
-let tournamentSize = '36px';
-let casterSize = '36px';
-let twitterSize = '26px';
+const roundSize = '54px';
+const tournamentSize = '36px';
+const casterSize = '36px';
+const twitterSize = '26px';
 
 //to avoid the code constantly running the same method over and over
 let p1CharacterPrev, p1SkinPrev, p1ColorPrev;
@@ -21,7 +21,7 @@ let socialInt1;
 let socialInt2;
 let twitter1, twitch1, twitter2, twitch2;
 let socialSwitch = true; //true = twitter, false = twitch
-let socialInterval = 9000;
+const socialInterval = 9000;
 
 
 let startup = true;
@@ -30,7 +30,7 @@ let startup = true;
 window.onload = init;
 function init() {
 	async function mainLoop() {
-		let scInfo = await getInfo();
+		const scInfo = await getInfo();
 		getData(scInfo);
 	}
 
@@ -442,10 +442,10 @@ function updateSocial(mainSocial, mainText, mainBox, otherSocial, otherBox) {
 
 //player text change
 function updatePlayerName(wrapperID, nameID, teamID, pName, pTeam) {
-	let nameEL = document.getElementById(nameID);
+	const nameEL = document.getElementById(nameID);
 	nameEL.style.fontSize = '80px'; //set original text size
 	nameEL.textContent = pName; //change the actual text
-	let teamEL = document.getElementById(teamID);
+	const teamEL = document.getElementById(teamID);
 	teamEL.style.fontSize = '40px';
 	teamEL.textContent = pTeam;
 
@@ -454,14 +454,14 @@ function updatePlayerName(wrapperID, nameID, teamID, pName, pTeam) {
 
 //generic text changer
 function updateText(textID, textToType, maxSize) {
-	let textEL = document.getElementById(textID);
+	const textEL = document.getElementById(textID);
 	textEL.style.fontSize = maxSize; //set original text size
 	textEL.textContent = textToType; //change the actual text
 	resizeText(textEL); //resize it if it overflows
 }
 //social text changer
 function updateSocialText(textID, textToType, maxSize, wrapper) {
-	let textEL = document.getElementById(textID);
+	const textEL = document.getElementById(textID);
 	textEL.style.fontSize = maxSize; //set original text size
 	textEL.textContent = textToType; //change the actual text
 	const wrapperEL = document.getElementById(wrapper)
@@ -470,7 +470,7 @@ function updateSocialText(textID, textToType, maxSize, wrapper) {
 
 //text resize, keeps making the text smaller until it fits
 function resizeText(textEL) {
-	let childrens = textEL.children;
+	const childrens = textEL.children;
 	while (textEL.scrollWidth > textEL.offsetWidth || textEL.scrollHeight > textEL.offsetHeight) {
 		if (childrens.length > 0) { //for team+player texts
 			Array.from(childrens).forEach(function (child) {
@@ -504,13 +504,11 @@ function charaFadeOut(itemID, charMove, funct) {
 
 //fade in characters edition
 function charaFadeIn(charaID) {
-	//move the character
 	gsap.to(charaID, {delay: .3, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime+.1});
 }
 
 //initial characters fade in
 function initCharaFade(charaID, charMove) {
-	//character movement
 	gsap.fromTo(charaID,
 		{x: charMove, opacity: 0},
 		{delay: introDelay, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
@@ -519,7 +517,7 @@ function initCharaFade(charaID, charMove) {
 //searches for the main json file
 function getInfo() {
 	return new Promise(function (resolve) {
-		let oReq = new XMLHttpRequest();
+		const oReq = new XMLHttpRequest();
 		oReq.addEventListener("load", reqListener);
 		oReq.open("GET", 'Resources/Texts/ScoreboardInfo.json');
 		oReq.send();
@@ -535,9 +533,9 @@ function getInfo() {
 //searches for a json file with character data
 function getCharInfo(pCharacter) {
 	return new Promise(function (resolve) {
-		let oReq = new XMLHttpRequest();
+		const oReq = new XMLHttpRequest();
 		oReq.addEventListener("load", reqListener);
-		oReq.onerror = function(){resolve("notFound")}; //for obs local file browser sources
+		oReq.onerror = () => {resolve("notFound")}; //for obs local file browser sources
 		oReq.open("GET", 'Resources/Texts/Character Info/' + pCharacter + '.json');
 		oReq.send();
 
@@ -552,7 +550,7 @@ function getCharInfo(pCharacter) {
 async function updateChar(pCharacter, pSkin, color, charID, direction) {
 
 	//store so code looks cleaner later
-	let charEL = document.getElementById(charID);
+	const charEL = document.getElementById(charID);
 
 	//this will trigger whenever the image loaded cant be found
 	if (startup) {
@@ -570,7 +568,7 @@ async function updateChar(pCharacter, pSkin, color, charID, direction) {
 	charEL.setAttribute('src', 'Resources/Characters/VS Screen/' + pCharacter + '/' + pSkin + ' ' + direction + '.png');
 
 	//get the character positions
-	let charInfo = await getCharInfo(pCharacter);
+	const charInfo = await getCharInfo(pCharacter);
 	//             x, y, scale
 	let charPos = [0, 0, 1];
 	//now, check if the character or skin exists in the json file we checked earler
