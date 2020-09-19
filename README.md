@@ -41,6 +41,8 @@ Repeat from the 3rd step to add the `VS Screen.html`, though I recommend you to 
 - I recommend you to set the Audio Fade Style to crossfade, just in case.
 - On the scene's right click menu, set it to Transition Override to the transition you just created.
 
+The interface will also update basic text files with the match info at `Resources/Texts/Simple Texts/` so you can add them to OBS with ease.
+
 ---
 
 ## Customizing stuff
@@ -57,5 +59,5 @@ And most importantly, this project was created using [RoA-Stream-Tool](https://g
 
 ---
 
-Do you want to adapt this project to another game but can't figure out how to? Lucky for you, I'm open for commisions! Contact me on twitter [@Readeku](https://twitter.com/Readeku) or on Discord `Readek#5869`!.
+Do you want to adapt this project to another game but can't figure out how to? Lucky for you, I'm open for commisions! Contact me on Twitter [@Readeku](https://twitter.com/Readeku) or on Discord `Readek#5869`!.
 
