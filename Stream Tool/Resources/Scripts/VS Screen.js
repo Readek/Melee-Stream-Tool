@@ -120,10 +120,10 @@ function getData(scInfo) {
 
 
 		//set the caster info
-		updateText("caster1N", caster1, casterSize);
+		updateSocialText("caster1N", caster1, casterSize, "caster1TextBox");
 		updateSocialText("caster1Tr", twitter1, twitterSize, "caster1TwitterBox");
 		updateSocialText("caster1Th", twitch1, twitterSize, "caster1TwitchBox");
-		updateText("caster2N", caster2, casterSize);
+		updateSocialText("caster2N", caster2, casterSize, "caster2TextBox");
 		updateSocialText("caster2Tr", twitter2, twitterSize, "caster2TwitterBox");
 		updateSocialText("caster2Th", twitch2, twitterSize, "caster2TwitchBox");
 
