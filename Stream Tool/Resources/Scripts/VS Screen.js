@@ -147,6 +147,14 @@ function getData(scInfo) {
 			}
 		}, socialInterval);
 
+		//if a caster has no name, hide its icon
+		if (caster1 == "") {
+			document.getElementById('caster1TextBox').style.opacity = 0;
+		}
+		if (caster2 == "") {
+			document.getElementById('caster2TextBox').style.opacity = 0;
+		}
+
 
 		startup = false; //next time we run this function, it will skip all we just did
 	}

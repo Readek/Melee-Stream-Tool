@@ -213,9 +213,10 @@ async function getData(scInfo) {
 		} else {
 			document.getElementById('bestOf').textContent = "Best of 3";
 		}
-		//fade them in
-		gsap.to("#overlayRound", {delay: introDelay, opacity: 1, ease: "power2.out", duration: fadeInTime+.2});
-
+		//fade them in (but only if round text is not empty)
+		if (round != "") {
+			gsap.to("#overlayRound", {delay: introDelay, opacity: 1, ease: "power2.out", duration: fadeInTime+.2});
+		}
 
 		//set the caster info
 		updateText("caster1N", caster1, casterSize);
@@ -244,6 +245,14 @@ async function getData(scInfo) {
 				socialSwitch = true;
 			}
 		}, socialInterval);
+
+		//if a caster has no name, hide its icon
+		if (caster1 == "") {
+			document.getElementById('caster1TextBox').style.opacity = 0;
+		}
+		if (caster2 == "") {
+			document.getElementById('caster2TextBox').style.opacity = 0;
+		}
 
 
 		//check if the team has a logo we can place on the overlay
@@ -406,9 +415,11 @@ async function getData(scInfo) {
 		
 		//update the round text
 		if (document.getElementById('round').textContent != round){
-			fadeOut("#round", () => {
+			fadeOut("#overlayRound", () => {
 				updateRound(round);
-				fadeIn("#round");
+				if (round != "") {
+					fadeIn("#overlayRound");
+				}
 			});
 		}
 
