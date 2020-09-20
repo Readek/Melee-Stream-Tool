@@ -43,6 +43,8 @@ Repeat from the 3rd step to add the `VS Screen.html`, though I recommend you to 
 
 The interface will also update basic text files with the match info at `Resources/Texts/Simple Texts/` so you can add them to OBS with ease.
 
+If you drop an image in `Resources/Team Logos/` and write the name of the image to the tag of a player, the image will appear on the game overlay.
+
 ---
 
 ## Customizing stuff
@@ -60,4 +62,8 @@ And most importantly, this project was created using [RoA-Stream-Tool](https://g
 ---
 
 Do you want to adapt this project to another game but can't figure out how to? Lucky for you, I'm open for commisions! Contact me on Twitter [@Readeku](https://twitter.com/Readeku) or on Discord `Readek#5869`!.
+
+---
+
+Resources: [The spriters resource](https://www.spriters-resource.com/search/?q=melee), the [Melee HD Asset Library](https://assets.melee.tv/), and the [VS poses](https://smashboards.com/threads/download-available-poses-for-classic-mode-vs.435797/).
 
