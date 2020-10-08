@@ -63,6 +63,8 @@ And most importantly, this project was created using [RoA-Stream-Tool](https://g
 
 Do you want to adapt this project to another game but can't figure out how to? Lucky for you, I'm open for commisions! Contact me on Twitter [@Readeku](https://twitter.com/Readeku) or on Discord `Readek#5869`!.
 
+Do you want to support this project? [Buy me a ko-fi](https://ko-fi.com/readek) or tip me [directly](https://streamlabs.com/readek/tip)!
+
 This is one of my first projects in Javascript, if you know your stuff and look at the code, you may find ways to make the thing a bit more optimized (because right now... it isn't), and I would be happy to hear how to! Please, use this github to leave suggestions on how to imporve things.
 
 ---
