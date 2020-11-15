@@ -28,13 +28,24 @@
             width: 1920px;
             height: 1080px;
             overflow: hidden;
-            background: transparent;
+            /* background: transparent; */
+            background: darkgray;
             padding: 0px;
             margin: 0px;
             text-transform: uppercase;
             color: white;
             font-family: "Deansgate";
             white-space: nowrap;
+            display: grid;
+            grid-template-areas:
+                ". .       . tourney-status . .            ."
+                ". .       . .              . .            ."
+                ". .       . .              . commentators ."
+                ". .       . .              . .            ."
+                ". p1-card . .              . p2-card      ."
+                ". .       . .              . .            .";
+            grid-template-rows: 67px 1fr 255px 16px 446px 37px;
+            grid-template-columns: 34px 255px 1fr 484px 1fr 255px 36px;
         }
 
 
@@ -55,26 +66,26 @@
             height: 1080px;
             top: 0px;
             left: 0px;
-            -webkit-mask-image: url("Resources/Overlay/Game\ Mask.png");
+            -webkit-mask-image: url("./Resources/OCO/oco_overlay3_mask.png");
         }
 
 
-        .scoreboardP1 {
-            position: absolute;
-            left: 18px;
-            top: 17px;
+        .scoreboard {
+            position: relative;
+            z-index: -1;
+        }
+        .P1 {
+            grid-area: p1-card;
         }
 
-        .scoreboardP2 {
-            position: absolute;
-            right: 18px;
-            top: 17px;
+        .P2 {
+            grid-area: p2-card;
         }
 
         .rect {
             width: 257px;
-            height: 355px;
-            position: absolute;
+            height: 358px;
+            box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.5);
         }
         #p1Color {
             left: 4px;
@@ -141,21 +152,22 @@
 
         .wrappers {
             position: absolute;
-            width: 255px;
-            height: 54px;
+            width: 210px;
+            height: 93px;
             line-height: 54px;
             text-align: center;
             top: 356px;
             opacity: 0;
             color: black;
+            background-color: white;
         }
 
         #p1Wrapper {
-            left: 5px;
+            left: 0px;
         }
 
         #p2Wrapper {
-            right: 5px;
+            right: -1px;
         }
 
         .teams {
@@ -164,46 +176,26 @@
 
 
         .scores {
-            position: absolute;
-            top: 434px;
+        }
+        #scoresP1 {
+            grid-area: p1-card;
         }
         #scoresP2 {
-            right: 35px;
+            grid-area: p2-card;
+        }
+        .score-ticks {
+            display: flex;
+            flex-direction: column;
         }
         .scoreTick {
-            position: absolute;
             opacity: 0;
-        }
-        #win1P1 {
-            left: 248px;
-        }
-        #win2P1 {
-            left: 213px;
-        }
-        #win3P1 {
-            left: 178px;
-        }
-        #wlP1 {
-            left: 64px;
-        }
-        #win1P2 {
-            right: 248px;
-        }
-        #win2P2 {
-            right: 213px;
-        }
-        #win3P2 {
-            right: 178px;
-        }
-        #wlP2 {
-            right: 144px;
+            stroke: white;
+            stroke-width: 4px;
         }
 
 
         #overlayRound {
-            position: absolute;
-            left: 20px;
-            bottom: 70px;
+            grid-area: tourney-status;
             opacity: 0;
             filter: drop-shadow(0px 0px 3px black);
         }
@@ -230,9 +222,7 @@
 
 
         #overlayCasters {
-            position: absolute;
-            right: 12px;
-            bottom: 25px;
+            grid-area: commentators;
             opacity: 1;
             transform: scale(1.1);
             filter: drop-shadow(0px 0px 3px black);
@@ -249,7 +239,6 @@
             position: absolute;
             width: 255px;
             height: 36px;
-            right: 0px;
             text-align: center;
         }
         .casterIcon {
@@ -268,7 +257,6 @@
             width: 255px;
             height: 36px;
             bottom: -60px;
-            right: 0px;
             text-align: center;
         }
         .twitterIcon {
@@ -282,7 +270,6 @@
             width: 255px;
             height: 36px;
             bottom: -62px;
-            right: 0px;
             text-align: center;
         }
         .twitchIcon {
@@ -391,15 +378,10 @@
 <body>
 
     <div id="theBackground">
-        <video autoplay loop class="absol" src="Resources/Overlay/BG.webm"></video>
+        <img class="absol" src="./Resources/OCO/oco_overlay3.png"></img>
     </div>
 
-    <img class="absol" src="Resources/Overlay/Game Borders.png">
-
-
-    <div id="overlayP1" class="scoreboardP1">
-        <img src="Resources/Overlay/Character Border.png" class="absol">
-
+    <div id="overlayP1" class="scoreboard P1">
         <div class="rect" id="p1Color"></div>
         <img class="sagaIcon" id="sagaIconP1">
         <div class="pCharaMask">
@@ -415,37 +397,32 @@
     </div>
     
     <div id="scoresP1" class="scores">
-        <div id="win1P1" class="scoreTick">
-            <svg width="35" height="23" id="win1P1Color" class="absol">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" id="win1P1Border" class="absol">
-        </div>
-        
-        <div id="win2P1" class="scoreTick">
-            <svg width="35" height="23" class="absol" id="win2P1Color">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" class="absol" id="win2P1Border">
-        </div>
-
-        <div id="win3P1" class="scoreTick">
-            <svg width="35" height="23" class="absol" id="win3P1Color">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" class="absol" id="win3P1Border">
+        <div class="score-ticks">
+            <div id="win1P1" class="scoreTick">
+                <svg width="35" height="23" id="win1P1Color">
+                    <polygon points="10,0 32,0 25,23 0,23"/>
+                </svg>
+            </div>
+            <div id="win2P1" class="scoreTick">
+                <svg width="35" height="23" id="win2P1Color">
+                    <polygon points="10,0 32,0 25,23 0,23"/>
+                </svg>
+            </div>
+            <div id="win3P1" class="scoreTick">
+                <svg width="35" height="23" id="win3P1Color">
+                    <polygon points="10,0 32,0 25,23 0,23"/>
+                </svg>
+            </div>
         </div>
 
-        <div id="wlP1" class="scoreTick">
+        <div id="wlP1">
             <img src="Resources/Overlay/WL BG.png" class="absol">
             <img class="absol" id="wlP1Text">
         </div>
     </div>
 
 
-    <div id="overlayP2" class="scoreboardP2">
-        <img src="Resources/Overlay/Character Border.png"/>
-
+    <div id="overlayP2" class="scoreboard P2">
         <div class="rect" id="p2Color"></div>
         <img class="sagaIcon" id="sagaIconP2">
         <div class="pCharaMask">
@@ -463,25 +440,22 @@
     </div>
     
     <div id="scoresP2" class="scores">
-        <div id="win1P2" class="scoreTick">
-            <svg width="35" height="23" id="win1P2Color" class="absol mirror">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" id="win1P2Border" class="absol mirror">
-        </div>
-        
-        <div id="win2P2" class="scoreTick">
-            <svg width="35" height="23" class="absol mirror" id="win2P2Color">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" class="absol mirror" id="win2P2Border">
-        </div>
-
-        <div id="win3P2" class="scoreTick">
-            <svg width="35" height="23" class="absol mirror" id="win3P2Color">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" class="absol mirror" id="win3P2Border">
+        <div class="score-ticks">
+            <div id="win1P2" class="scoreTick">
+                <svg width="35" height="23" id="win1P2Color" class="mirror">
+                    <polygon points="10,0 32,0 25,23 0,23"/>
+                </svg>
+            </div>
+            <div id="win2P2" class="scoreTick">
+                <svg width="35" height="23" class="mirror" id="win2P2Color">
+                    <polygon points="10,0 32,0 25,23 0,23"/>
+                </svg>
+            </div>
+            <div id="win3P2" class="scoreTick">
+                <svg width="35" height="23" class="mirror" id="win3P2Color">
+                    <polygon points="10,0 32,0 25,23 0,23"/>
+                </svg>
+            </div>
         </div>
 
         <div id="wlP2" class="scoreTick">
