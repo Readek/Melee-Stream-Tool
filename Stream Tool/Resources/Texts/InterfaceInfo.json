@@ -30,11 +30,11 @@
     "colorSlots": {
         "color0": {
             "name": "Red",
-            "hex": "#e54c4c"
+            "hex": "#d972e3"
         },
         "color1": {
             "name": "Blue",
-            "hex": "#4b4ce5"
+            "hex": "#00e5e5"
         },
         "color2": {
             "name": "Yellow",

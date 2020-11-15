@@ -757,9 +757,9 @@ function getFontSize(textElement) {
 function getHexColor(color) {
 	switch (color) {
 		case "Red":
-			return "#e54c4c";
+			return "#d972e3";
 		case "Blue":
-			return "#4b4ce5";
+			return "#00e5e5";
 		case "Yellow":
 			return "#ffcb00";
 		case "Green":
