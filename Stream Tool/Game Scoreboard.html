@@ -176,6 +176,7 @@
 
 
         .scores {
+            position: relative;
         }
         #scoresP1 {
             grid-area: p1-card;
@@ -186,11 +187,27 @@
         .score-ticks {
             display: flex;
             flex-direction: column;
+            position: absolute;
+            bottom: 0px;
+            height: 100px;
+            justify-content: space-between;
+        }
+        #scoresP1 .score-ticks {
+            right: -6px;
+        }
+        #scoresP2 .score-ticks {
+            left: -6px;
         }
         .scoreTick {
             opacity: 0;
             stroke: white;
             stroke-width: 4px;
+        }
+        .wl {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
 
@@ -198,48 +215,48 @@
             grid-area: tourney-status;
             opacity: 0;
             filter: drop-shadow(0px 0px 3px black);
+            position: relative;
         }
 
         #round {
             position: absolute;
             width: 263px;
             height: 50px;
-            bottom: -18px;
+            bottom: 8px;
             text-align: center;
             font-family: "Roboto";
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         #bestOf {
             position: absolute;
             width: 255px;
             height: 24px;
-            bottom: -22px;
+            bottom: 4px;
             text-align: center;
             font-family: "Roboto";
             font-size: 24px;
             color: rgb(206, 206, 206);
+            left: 50%;
+            transform: translateX(-50%);
         }
 
 
         #overlayCasters {
+            position: relative;
             grid-area: commentators;
             opacity: 1;
             transform: scale(1.1);
             filter: drop-shadow(0px 0px 3px black);
-        }
-        #caster1 {
-            position: absolute;
-            bottom: 110px;
-        }
-        #caster2 {
-            position: absolute;
-            bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 8px;
         }
         .casterTextBox {
-            position: absolute;
             width: 255px;
             height: 36px;
-            text-align: center;
         }
         .casterIcon {
             height: 23px;
@@ -252,31 +269,34 @@
             font-family: "Roboto";
         }
 
+        .casterSocialBox {
+            display: grid;
+            grid-template-areas: "overlap";
+        }
+        .casterSocialBox > * {
+            grid-area: overlap;
+        }
         .casterTwitterBox {
-            position: absolute;
             width: 255px;
             height: 36px;
-            bottom: -60px;
-            text-align: center;
         }
         .twitterIcon {
             height: 20px;
             width: 20px;
             transform: translateY(3px);
             fill: rgb(168, 168, 168);
+            margin-left: 4px;
         }
         .casterTwitchBox {
-            position: absolute;
             width: 255px;
             height: 36px;
-            bottom: -62px;
-            text-align: center;
         }
         .twitchIcon {
             height: 17px;
             width: 17px;
             fill: rgb(168, 168, 168);
             transform: translateY(2px);
+                margin-left: 4px;
         }
         .socialText {
             font-size: 18px;
@@ -415,8 +435,8 @@
             </div>
         </div>
 
-        <div id="wlP1">
-            <img src="Resources/Overlay/WL BG.png" class="absol">
+        <div id="wlP1" class="scoreTick wl">
+            <img src="Resources/Overlay/WL BG.png">
             <img class="absol" id="wlP1Text">
         </div>
     </div>
@@ -458,8 +478,8 @@
             </div>
         </div>
 
-        <div id="wlP2" class="scoreTick">
-            <img src="Resources/Overlay/WL BG.png" class="absol mirror">
+        <div id="wlP2" class="scoreTick wl">
+            <img src="Resources/Overlay/WL BG.png" class="mirror">
             <img class="absol" id="wlP2Text">
         </div>
     </div>
@@ -498,7 +518,6 @@
                     <span id="caster1Th" class="socialText"></span>
                 </div>
             </div>
-
         </div>
 
         <div id="caster2">
@@ -528,7 +547,6 @@
                     <span id="caster2Th" class="socialText"></span>
                 </div>
             </div>
-
         </div>
     </div>
 
