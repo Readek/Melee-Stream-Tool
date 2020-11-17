@@ -1,7 +1,7 @@
 ![preview](https://cdn.discordapp.com/attachments/574303886869790730/752865123009298532/unknown.png)
 
 # Melee-Stream-Tool
-*Also available for [Rivals of Aether](https://github.com/Readek/RoA-Stream-Tool)!*
+*Also available for [Rivals of Aether](https://github.com/Readek/RoA-Stream-Tool) and [Rushdown Revolt](https://github.com/Readek/Rushdown-Revolt-Stream-Tool)!*
 
 So you're interested in doing SSBMelee streams, huh? Luckily for you, with this tool you'll be able to update all the variables you need for the provided overlays with the provided GUI, and easily customize the overlays to make them your own!
 
