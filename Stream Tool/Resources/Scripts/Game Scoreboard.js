@@ -393,16 +393,43 @@ async function getData(scInfo) {
 				gsap.fromTo('#win3P2',
 					{x: pMove},
 					{x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+				gsap.to('#win4P1',
+					{x: -pMove, opacity: 0, ease: "power2.out", duration: fadeInTime});
+				gsap.to('#win4P2',
+					{x: pMove, opacity: 0, ease: "power2.out", duration: fadeInTime});
 				
 				fadeOut("#bestOf", () => {
 					document.getElementById('bestOf').textContent = "Best of 5";
 					fadeIn("#bestOf");
 				});
-			} else {
+			} else if (bestOf == "Bo7") {
+				gsap.fromTo('#win3P1',
+					{x: -pMove},
+					{x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+				gsap.fromTo('#win4P1',
+					{x: -pMove},
+					{x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+
+				gsap.fromTo('#win3P2',
+					{x: -pMove},
+					{x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+				gsap.fromTo('#win4P2',
+					{x: -pMove},
+					{x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+				fadeOut("#bestOf", () => {
+					document.getElementById('bestOf').textContent = "Best of 7";
+					fadeIn("#bestOf");
+				});
+			}
+			else {
 				gsap.to('#win3P1',
 					{x: -pMove, opacity: 0, ease: "power2.in", duration: fadeInTime});
 				gsap.to('#win3P2',
 					{x: pMove, opacity: 0, ease: "power2.in", duration: fadeInTime});
+				gsap.to('#win4P1',
+					{x: -pMove, opacity: 0, ease: "power2.out", duration: fadeInTime});
+				gsap.to('#win4P2',
+					{x: pMove, opacity: 0, ease: "power2.out", duration: fadeInTime});
 
 				fadeOut("#bestOf", () => {
 					document.getElementById('bestOf').textContent = "Best of 3";
@@ -474,6 +501,7 @@ function updateScore(pNum, pScore, pColor) {
 	const score1EL = document.getElementById('win1P'+pNum);
 	const score2EL = document.getElementById('win2P'+pNum);
 	const score3EL = document.getElementById('win3P'+pNum);
+	const score4EL = document.getElementById('win4P'+pNum);
 
 
 	if (pScore >= 1) {
@@ -486,10 +514,15 @@ function updateScore(pNum, pScore, pColor) {
 	} else if (score2EL.style.fill != "rgb(65, 65, 65)") {
 		scoreChange(score2EL, "#414141");
 	}
-	if (pScore == 3) {
+	if (pScore >= 3) {
 		scoreChange(score3EL, getHexColor(pColor));
 	} else if (score3EL.style.fill != "rgb(65, 65, 65)") {
 		scoreChange(score3EL, "#414141");
+	}
+	if (pScore == 4) {
+		scoreChange(score4EL, getHexColor(pColor));
+	} else if (score4EL.style.fill != "rgb(65, 65, 65)") {
+		scoreChange(score4EL, "#414141");
 	}
 }
 function scoreChange(scoreEL, color) {
@@ -504,12 +537,6 @@ function updateColor(colorID, textID, pColor) {
 
 	gsap.to(colorEL, {backgroundColor: getHexColor(pColor), duration: fadeInTime});
 	gsap.to(textEL, {color: getHexColor(pColor), duration: fadeInTime});
-}
-
-function updateBorder(bestOf) {
-	document.getElementById('borderP1').setAttribute('src', 'Resources/Overlay/Border ' + bestOf + '.png');
-	document.getElementById('borderP2').setAttribute('src', 'Resources/Overlay/Border ' + bestOf + '.png');
-	bestOfPrev = bestOf
 }
 
 //team logo change
@@ -700,6 +727,7 @@ function moveScoresIntro(pNum, bestOf, pWL, move) {
 	const score1EL = document.getElementById('win1P'+pNum);
 	const score2EL = document.getElementById('win2P'+pNum);
 	const score3EL = document.getElementById('win3P'+pNum);
+	const score4EL = document.getElementById('win4P'+pNum);
 	const wlEL = document.getElementById('wlP'+pNum);
 
 	gsap.fromTo(score1EL, 
@@ -710,6 +738,14 @@ function moveScoresIntro(pNum, bestOf, pWL, move) {
 		{delay: introDelay+.4, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
 	if (bestOf == "Bo5") {
 		gsap.fromTo(score3EL, 
+			{x:-move},
+			{delay: introDelay+.6, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+	}
+	if (bestOf == "Bo7") {
+		gsap.fromTo(score3EL, 
+			{x:-move},
+			{delay: introDelay+.6, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+		gsap.fromTo(score4EL, 
 			{x:-move},
 			{delay: introDelay+.6, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
 	}
