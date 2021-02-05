@@ -33,9 +33,13 @@ const charImgP2 = document.getElementById('p2CharImg');
 const p1Win1 = document.getElementById('winP1-1');
 const p1Win2 = document.getElementById('winP1-2');
 const p1Win3 = document.getElementById('winP1-3');
+const p1Win4 = document.getElementById('winP1-4');
 const p2Win1 = document.getElementById('winP2-1');
 const p2Win2 = document.getElementById('winP2-2');
 const p2Win3 = document.getElementById('winP2-3');
+const p2Win4 = document.getElementById('winP2-4');
+p1Win4.style.display = 'none';
+p2Win4.style.display = 'none';
 
 const p1W = document.getElementById('p1W');
 const p1L = document.getElementById('p1L');
@@ -99,6 +103,8 @@ function init() {
     p2Win2.addEventListener("click", changeScoreTicks2);
     p1Win3.addEventListener("click", changeScoreTicks3);
     p2Win3.addEventListener("click", changeScoreTicks3);
+    p1Win4.addEventListener("click", changeScoreTicks4);
+    p2Win4.addEventListener("click", changeScoreTicks4);
 
     //set click listeners for the [W] and [L] buttons
     p1W.addEventListener("click", setWLP1);
@@ -119,9 +125,11 @@ function init() {
     //set click listeners to change the "best of" status
     document.getElementById("bo3Div").addEventListener("click", changeBestOf);
     document.getElementById("bo5Div").addEventListener("click", changeBestOf);
+    document.getElementById("bo7Div").addEventListener("click", changeBestOf);
     //set initial value
     document.getElementById("bo3Div").style.color = "var(--text2)";
     document.getElementById("bo5Div").style.backgroundImage = "linear-gradient(to top, #575757, #00000000)";
+    document.getElementById("bo7Div").style.color = "var(--text2)";
 
 
     //check if the round is grand finals
@@ -498,6 +506,7 @@ function changeScoreTicks1() {
     //deactivate wins 2 and 3
     document.getElementById('winP'+pNum+'-2').checked = false;
     document.getElementById('winP'+pNum+'-3').checked = false;
+    document.getElementById('winP'+pNum+'-4').checked = false;
 }
 //whenever clicking on the second score tick
 function changeScoreTicks2() {
@@ -509,6 +518,7 @@ function changeScoreTicks2() {
     //deactivate wins 2 and 3
     document.getElementById('winP'+pNum+'-1').checked = true;
     document.getElementById('winP'+pNum+'-3').checked = false;
+    document.getElementById('winP'+pNum+'-4').checked = false;
 }
 //something something the third score tick
 function changeScoreTicks3() {
@@ -520,10 +530,24 @@ function changeScoreTicks3() {
     //deactivate wins 2 and 3
     document.getElementById('winP'+pNum+'-1').checked = true;
     document.getElementById('winP'+pNum+'-2').checked = true;
+    document.getElementById('winP'+pNum+'-4').checked = false;
+}
+
+//something something the fourth score tick
+function changeScoreTicks4() {
+    let pNum = 1;
+    if (this == p2Win4) {
+        pNum = 2;
+    }
+
+    //deactivate wins 2 and 3
+    document.getElementById('winP'+pNum+'-1').checked = true;
+    document.getElementById('winP'+pNum+'-2').checked = true;
+    document.getElementById('winP'+pNum+'-3').checked = true;
 }
 
 //returns how much score does a player have
-function checkScore(tick1, tick2, tick3) {
+function checkScore(tick1, tick2, tick3, tick4) {
     let totalScore = 0;
 
     if (tick1.checked) {
@@ -535,13 +559,18 @@ function checkScore(tick1, tick2, tick3) {
     if (tick3.checked) {
         totalScore++;
     }
+    if (tick4.checked) {
+        totalScore++;
+    }
 
     return totalScore;
 }
 
 //gives a victory to player 1 
 function giveWinP1() {
-    if (p1Win2.checked) {
+    if (p1Win3.checked) {
+        p1Win4.checked = true;
+    } else if (p1Win2.checked) {
         p1Win3.checked = true;
     } else if (p1Win1.checked) {
         p1Win2.checked = true;
@@ -551,7 +580,9 @@ function giveWinP1() {
 }
 //same with P2
 function giveWinP2() {
-    if (p2Win2.checked) {
+    if (p2Win3.checked) {
+        p2Win4.checked = true;
+    } else if (p2Win2.checked) {
         p2Win3.checked = true;
     } else if (p2Win1.checked) {
         p2Win2.checked = true;
@@ -631,16 +662,31 @@ function getTextWidth(text, font) {
 //used when clicking on the "Best of" buttons
 function changeBestOf() {
     let theOtherBestOf; //we always gotta know
+    let theOtherBestOf2; //we always gotta know
     if (this == document.getElementById("bo5Div")) {
         currentBestOf = "Bo5";
         theOtherBestOf = document.getElementById("bo3Div");
+        theOtherBestOf2 = document.getElementById("bo7Div");
         p1Win3.style.display = "block";
         p2Win3.style.display = "block";
+        p1Win4.style.display = "none";
+        p2Win4.style.display = "none";
+    } else if (this == document.getElementById("bo7Div")) {
+        currentBestOf = "Bo7";
+        theOtherBestOf = document.getElementById("bo3Div");
+        theOtherBestOf2 = document.getElementById("bo5Div");
+        p1Win3.style.display = "block";
+        p2Win3.style.display = "block";
+        p1Win4.style.display = "block";
+        p2Win4.style.display = "block";
     } else {
         currentBestOf = "Bo3";
         theOtherBestOf = document.getElementById("bo5Div");
+        theOtherBestOf2 = document.getElementById("bo7Div");
         p1Win3.style.display = "none";
         p2Win3.style.display = "none";
+        p1Win4.style.display = "none";
+        p2Win4.style.display = "none";
     }
 
     //change the color and background of the buttons
@@ -648,6 +694,8 @@ function changeBestOf() {
     this.style.backgroundImage = "linear-gradient(to top, #575757, #00000000)";
     theOtherBestOf.style.color = "var(--text2)";
     theOtherBestOf.style.backgroundImage = "var(--bg4)";
+    theOtherBestOf2.style.color = "var(--text2)";
+    theOtherBestOf2.style.backgroundImage = "var(--bg4)";
 }
 
 
@@ -700,10 +748,10 @@ function swap() {
     skinP2 = tempP1Skin;
 
 
-    tempP1Score = checkScore(p1Win1, p1Win2, p1Win3);
-    tempP2Score = checkScore(p2Win1, p2Win2, p2Win3);
-    setScore(tempP2Score, p1Win1, p1Win2, p1Win3);
-    setScore(tempP1Score, p2Win1, p2Win2, p2Win3);
+    tempP1Score = checkScore(p1Win1, p1Win2, p1Win3, p1Win4);
+    tempP2Score = checkScore(p2Win1, p2Win2, p2Win3, p2Win4);
+    setScore(tempP2Score, p1Win1, p1Win2, p1Win3, p1Win4);
+    setScore(tempP1Score, p2Win1, p2Win2, p2Win3, p2Win4);
 }
 
 function clearPlayers() {
@@ -741,16 +789,20 @@ function clearPlayers() {
     }
 }
 
-function setScore(score, tick1, tick2, tick3) {
+function setScore(score, tick1, tick2, tick3, tick4) {
     tick1.checked = false;
     tick2.checked = false;
     tick3.checked = false;
+    tick4.checked = false;
     if (score > 0) {
         tick1.checked = true;
         if (score > 1) {
             tick2.checked = true;
             if (score > 2) {
                 tick3.checked = true;
+                if (score > 3) {
+                    tick4.checked = true;
+                }
             }
         }
     }
@@ -782,14 +834,14 @@ function writeScoreboard() {
         p1Character: charP1,
         p1Skin: skinP1,
         p1Color: colorP1,
-        p1Score: checkScore(p1Win1, p1Win2, p1Win3),
+        p1Score: checkScore(p1Win1, p1Win2, p1Win3, p1Win4),
         p1WL: currentP1WL,
         p2Name: p2NameInp.value,
         p2Team: p2TagInp.value,
         p2Character: charP2,
         p2Skin: skinP2,
         p2Color: colorP2,
-        p2Score: checkScore(p2Win1, p2Win2, p2Win3),
+        p2Score: checkScore(p2Win1, p2Win2, p2Win3, p2Win4),
         p2WL: currentP2WL,
         bestOf: currentBestOf,
         round: roundInp.value,
