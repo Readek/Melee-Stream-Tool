@@ -471,26 +471,9 @@ function showNothing(itemEL) {
 
 //score change, pretty simple
 function updateScore(pNum, pScore, pColor) {
-	const score1EL = document.getElementById('win1P'+pNum);
-	const score2EL = document.getElementById('win2P'+pNum);
-	const score3EL = document.getElementById('win3P'+pNum);
-
-
-	if (pScore >= 1) {
-		scoreChange(score1EL, getHexColor(pColor));
-	} else if (score1EL.style.fill != "rgb(65, 65, 65)") {
-		scoreChange(score1EL, "#414141");
-	}
-	if (pScore >= 2) {
-		scoreChange(score2EL, getHexColor(pColor));
-	} else if (score2EL.style.fill != "rgb(65, 65, 65)") {
-		scoreChange(score2EL, "#414141");
-	}
-	if (pScore == 3) {
-		scoreChange(score3EL, getHexColor(pColor));
-	} else if (score3EL.style.fill != "rgb(65, 65, 65)") {
-		scoreChange(score3EL, "#414141");
-	}
+    const score_text = document.getElementById('p'+pNum+'Score');
+    score_text.innerText = pScore;
+    return;
 }
 function scoreChange(scoreEL, color) {
 	gsap.to(scoreEL, {fill: "#ffffff", duration: fadeInTime})
@@ -763,7 +746,7 @@ function getHexColor(color) {
 		case "Yellow":
 			return "#ffcb00";
 		case "Green":
-			return "#00b200";
+			return "#29f24e";
 		case "CPU":
 			return "#808080";
 		default:

@@ -10,13 +10,13 @@
 
     <style>
         @font-face {
-            font-family: "Deansgate";
-            src: url('Resources/Fonts/DeansgateCondensed-Bold.ttf');
+            font-family: "Bipolar";
+            src: url('Resources/Fonts/Bi_polarHandwriting-Regular.ttf');
         }
 
         @font-face {
-            font-family: "Roboto";
-            src: url('Resources/Fonts/Roboto-Bold.ttf');
+            font-family: "Fell Pica";
+            src: url('Resources/Fonts/IMFellDWPica-Regular.ttf');
         }
         @font-face {
             font-family: "FolkHeavy";
@@ -33,18 +33,20 @@
             margin: 0px;
             text-transform: uppercase;
             color: white;
-            font-family: "Deansgate";
+            font-family: "Bipolar";
             white-space: nowrap;
             display: grid;
             grid-template-areas:
-                ". .       . tourney-status . .            ."
-                ". .       . .              . .            ."
-                ". .       . .              . commentators ."
-                ". .       . .              . .            ."
-                ". p1-card . .              . p2-card      ."
-                ". .       . .              . .            .";
-            grid-template-rows: 67px 1fr 255px 16px 446px 37px;
-            grid-template-columns: 34px 255px 1fr 484px 1fr 255px 36px;
+                ". .       . .          .              .          . .            ."
+                ". .       . scoreboard scoreboard     scoreboard . .            ."
+                ". .       . .          .              .          . .            ."
+                ". p1-card . .          .              .          . p2-card      ."
+                ". .       . .          .              .          . .            ."
+                ". .       . .          .              .          . commentators ."
+                ". .       . .          .              .          . .            ."
+                ". .       . .          tourney-status .          . .            .";
+            grid-template-rows: 20px 60px 23px 445px 10px 1fr 8px 55px;
+            grid-template-columns: 31px 250px 1fr 160px 350px 160px 1fr 250px 32px
         }
 
 
@@ -65,14 +67,25 @@
             height: 1080px;
             top: 0px;
             left: 0px;
-            -webkit-mask-image: url("./Resources/OCO/oco_overlay3_mask.png");
         }
 
-
-        .scoreboard {
+        #scoreboard {
+            grid-area: scoreboard;
+            display: grid;
+            grid-template-areas:
+                ".       p1-score . p2-score .      "
+                "p1-name p1-score . p2-score p2-name"
+                ".       p1-score . p2-score .      ";
+            grid-template-rows: 1fr auto 1fr;
+            grid-template-columns: 1fr 58px 34px 58px 1fr;
+        }
+        #scoreboard > * {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
-            z-index: -1;
         }
+
         .P1 {
             grid-area: p1-card;
         }
@@ -82,8 +95,8 @@
         }
 
         .rect {
-            width: 257px;
-            height: 358px;
+            width: 251px;
+            height: 446px;
             box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.5);
         }
         #p1Color {
@@ -95,10 +108,13 @@
             top: 4px;
         }
 
+        .scoreboard {
+            position: relative;
+        }
 
         .pCharacter {
             position: absolute;
-            top: 0px;
+            bottom: 0px;
             width: 257px;
             height: 355px;
             opacity: 0;
@@ -111,14 +127,12 @@
         }
 
         .pCharaMask {
+            top: 0;
             position: absolute;
-            width: 257px;
-            height: 355px;
-            top: 4px;
-            left: 4px;
-            clip: rect(0px,257px,355px,0px);
+            width: 250px;
+            height: 445px;
+            clip: rect(0px,250px,445px,0px);
         }
-
 
         .sagaIcon {
             position: absolute;
@@ -150,39 +164,45 @@
         
 
         .wrappers {
-            position: absolute;
-            width: 210px;
-            height: 93px;
             line-height: 54px;
             text-align: center;
-            top: 356px;
             opacity: 0;
             color: black;
-            background-color: white;
+            position: relative;
         }
 
-        #p1Wrapper {
-            left: 0px;
+        .scores {
+            z-index: 20;
+            font-family: "Fell Pica";
+            font-size: 72px;
+            color: white;
+            text-align: center;
+            text-shadow: -1px  1px 0 #000,
+                          1px  1px 0 #000,
+                          1px -1px 0 #000,
+                         -1px -1px 0 #000;
+            position: relative;
+            top: -10px;
         }
 
-        #p2Wrapper {
-            right: -1px;
+        #p1Info {
+            grid-area: p1-name;
+        }
+        #p1Score {
+            grid-area: p1-score;
+        }
+
+        #p2Info {
+            grid-area: p2-name;
+        }
+        #p2Score {
+            grid-area: p2-score;
         }
 
         .teams {
-            color: rgb(116, 116, 116);
+            color: rgb(255, 255, 255);
         }
 
-
-        .scores {
-            position: relative;
-        }
-        #scoresP1 {
-            grid-area: p1-card;
-        }
-        #scoresP2 {
-            grid-area: p2-card;
-        }
         .score-ticks {
             display: flex;
             flex-direction: column;
@@ -204,7 +224,7 @@
         }
         .wl {
             position: absolute;
-            top: -16px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -223,9 +243,10 @@
             height: 50px;
             bottom: 8px;
             text-align: center;
-            font-family: "Roboto";
+            font-family: "Bipolar";
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(-50%);
         }
 
         #bestOf {
@@ -234,7 +255,7 @@
             height: 24px;
             bottom: 4px;
             text-align: center;
-            font-family: "Roboto";
+            font-family: "Fell Pica";
             font-size: 24px;
             color: rgb(206, 206, 206);
             left: 50%;
@@ -265,7 +286,7 @@
         }
         .casterText {
             font-size: 22px;
-            font-family: "Roboto";
+            font-family: "Bipolar";
         }
 
         .casterSocialBox {
@@ -299,7 +320,7 @@
         }
         .socialText {
             font-size: 18px;
-            font-family: "Roboto";
+            font-family: "Fell Pica";
             color: rgb(168, 168, 168);
         }
 
@@ -397,7 +418,43 @@
 <body>
 
     <div id="theBackground">
-        <img class="absol" src="./Resources/OCO/oco_overlay3.png"></img>
+        <img class="absol" src="./Resources/pr_assets/pr_overlay.png"></img>
+    </div>
+
+    <div id="scoreboard">
+        <div id="p1Info">
+            <img id="teamLogoP1" class="teamLogo">
+
+            <span id="p1Wrapper" class="wrappers">
+                <span id="p1Team" class="teams"></span>
+                <span id="p1Name" class="names"></span>
+            </span>
+    
+            <div id="wlP1" class="scoreTick wl">
+                <img src="Resources/Overlay/WL BG.png">
+                <img class="absol" id="wlP1Text">
+            </div>
+        </div>
+        <div id="p1Score" class="scores">
+        0
+        </div>
+
+        <div id="p2Info">
+            <img id="teamLogoP2" class="teamLogo">
+
+            <span id="p2Wrapper" class="wrappers">
+                <span id="p2Team" class="teams"></span>
+                <span id="p2Name" class="names"></span>
+            </span>
+        
+            <div id="wlP2" class="scoreTick wl">
+                <img src="Resources/Overlay/WL BG.png" class="mirror">
+                <img class="absol" id="wlP2Text">
+            </div>
+        </div>
+        <div id="p2Score" class="scores">
+        0
+        </div>
     </div>
 
     <div id="overlayP1" class="scoreboard P1">
@@ -407,37 +464,7 @@
             <img id="p1Character" class="pCharacter">
         </div>
 
-        <img id="teamLogoP1" class="teamLogo">
-
-        <span id="p1Wrapper" class="wrappers">
-            <span id="p1Team" class="teams"></span>
-            <span id="p1Name" class="names"></span>
-        </span>
     </div>
-    
-    <div id="scoresP1" class="scores">
-        <div class="score-ticks">
-            <div id="win1P1" class="scoreTick">
-                <svg width="35" height="23" id="win1P1Color">
-                    <polygon points="10,0 32,0 25,23 0,23"/>
-                </svg>
-            </div>
-            <div id="win2P1" class="scoreTick">
-                <svg width="35" height="23" id="win2P1Color">
-                    <polygon points="10,0 32,0 25,23 0,23"/>
-                </svg>
-            </div>
-            <div id="win3P1" class="scoreTick">
-                <svg width="35" height="23" id="win3P1Color">
-                    <polygon points="10,0 32,0 25,23 0,23"/>
-                </svg>
-            </div>
-        </div>
-
-        <div id="wlP1" class="scoreTick wl">
-            <img src="Resources/Overlay/WL BG.png">
-            <img class="absol" id="wlP1Text">
-        </div>
     </div>
 
 
@@ -445,42 +472,10 @@
         <div class="rect" id="p2Color"></div>
         <img class="sagaIcon" id="sagaIconP2">
         <div class="pCharaMask">
-            <div class="mirror absol">
-                <img id="p2Character" class="pCharacter"/>
-            </div>
+            <img id="p2Character" class="pCharacter"/>
         </div>
 
-        <img id="teamLogoP2" class="teamLogo">
-
-        <span id="p2Wrapper" class="wrappers">
-            <span id="p2Team" class="teams"></span>
-            <span id="p2Name" class="names"></span>
-        </span>
     </div>
-    
-    <div id="scoresP2" class="scores">
-        <div class="score-ticks">
-            <div id="win1P2" class="scoreTick">
-                <svg width="35" height="23" id="win1P2Color" class="mirror">
-                    <polygon points="10,0 32,0 25,23 0,23"/>
-                </svg>
-            </div>
-            <div id="win2P2" class="scoreTick">
-                <svg width="35" height="23" class="mirror" id="win2P2Color">
-                    <polygon points="10,0 32,0 25,23 0,23"/>
-                </svg>
-            </div>
-            <div id="win3P2" class="scoreTick">
-                <svg width="35" height="23" class="mirror" id="win3P2Color">
-                    <polygon points="10,0 32,0 25,23 0,23"/>
-                </svg>
-            </div>
-        </div>
-
-        <div id="wlP2" class="scoreTick wl">
-            <img src="Resources/Overlay/WL BG.png" class="mirror">
-            <img class="absol" id="wlP2Text">
-        </div>
     </div>
 
 
