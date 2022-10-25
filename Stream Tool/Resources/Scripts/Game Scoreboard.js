@@ -12,6 +12,7 @@ let p2CharacterPrev, p2SkinPrev, p2ScorePrev, p2ColorPrev, p2wlPrev;
 let bestOfPrev;
 
 //max text sizes (used when resizing back)
+const pronounSize = '24px';
 const roundSize = '32px';
 const casterSize = '24px';
 const twitterSize = '20px';
@@ -629,8 +630,10 @@ function updatePlayerName(wrapperID, nameID, teamID, pronounsID, pName, pTeam, p
 	const teamEL = document.getElementById(teamID);
 	teamEL.style.fontSize = '20px';
 	teamEL.textContent = pTeam;
-	const pronounsEl = document.getElementById(pronounsID);
-	pronounsEl.textContent = pPronouns;
+	const pronounsEL = document.getElementById(pronounsID);
+	pronounsEL.style.fontSize = pronounSize; // set original text size
+	pronounsEL.textContent = pPronouns; // change the actual text
+	resizeText(pronounsEL); // resize if it overflows
 	resizeText(document.getElementById(wrapperID)); //resize if it overflows
 }
 
