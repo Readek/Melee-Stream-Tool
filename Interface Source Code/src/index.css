@@ -132,9 +132,17 @@ input[type="text"] {
 
 #p1Name, #p2Name {
   float: left;
-  min-width: 60px;
+  min-width: 70px;
   max-width: 174px;
-  width: 60px;
+  width: 70px;
+  border-radius: 0px;
+}
+
+#p1Pronouns, #p2Pronouns {
+  float: left;
+  min-width: 70px;
+  max-width: 184px;
+  width: 70px;
   border-radius: 0px;
 }
 
