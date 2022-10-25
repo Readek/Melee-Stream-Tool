@@ -24,8 +24,10 @@ const viewport = document.getElementById('viewport');
 
 const p1NameInp = document.getElementById('p1Name');
 const p1TagInp = document.getElementById('p1Tag');
+const p1PronounsInp = document.getElementById('p1Pronouns');
 const p2NameInp = document.getElementById('p2Name');
 const p2TagInp = document.getElementById('p2Tag');
+const p2PronounsInp = document.getElementById('p2Pronouns');
 
 const charImgP1 = document.getElementById('p1CharImg');
 const charImgP2 = document.getElementById('p2CharImg');
@@ -114,6 +116,10 @@ function init() {
     //resize the box whenever the user types
     p1TagInp.addEventListener("input", resizeInput);
     p2TagInp.addEventListener("input", resizeInput);
+    
+    //resize the box whenever the user types
+    p1PronounsInp.addEventListener("input", resizeInput);
+    p2PronounsInp.addEventListener("input", resizeInput);
 
 
     //set click listeners to change the "best of" status
@@ -672,18 +678,24 @@ function checkRound() {
 function swap() {
     let tempP1Name = p1NameInp.value;
     let tempP1Team = p1TagInp.value;
+    let tempP1Pronouns = p1PronounsInp.value;
     let tempP2Name = p2NameInp.value;
     let tempP2Team = p2TagInp.value;
+    let tempP2Pronouns = p2PronounsInp.value;
 
     p1NameInp.value = tempP2Name;
     p1TagInp.value = tempP2Team;
+    p1PronounsInp.value = tempP2Pronouns
     p2NameInp.value = tempP1Name;
     p2TagInp.value = tempP1Team;
+    p2PronounsInp.value = tempP1Pronouns
 
     changeInputWidth(p1NameInp);
     changeInputWidth(p1TagInp);
+    changeInputWidth(p1PronounsInp);
     changeInputWidth(p2NameInp);
     changeInputWidth(p2TagInp);
+    changeInputWidth(p2PronounsInp);
 
 
     let tempP1Char = charP1;
@@ -710,12 +722,16 @@ function clearPlayers() {
     //clear player texts
     p1TagInp.value = "";
     p1NameInp.value = "";
+    p1PronounsInp.value="";
     p2TagInp.value = "";
     p2NameInp.value = "";
+    p2PronounsInp.value="";
     changeInputWidth(p1TagInp);
     changeInputWidth(p1NameInp);
+    changeInputWidth(p1PronounsInp);
     changeInputWidth(p2TagInp);
     changeInputWidth(p2NameInp);
+    changeInputWidth(p2PronounsInp);
 
     //reset characters to random
     document.getElementById('p1CharSelector').setAttribute('src', charPath + '/CSS/Random.png');
@@ -779,6 +795,7 @@ function writeScoreboard() {
     let scoreboardJson = {
         p1Name: p1NameInp.value,
         p1Team: p1TagInp.value,
+        p1Pronouns: p1PronounsInp.value,
         p1Character: charP1,
         p1Skin: skinP1,
         p1Color: colorP1,
@@ -786,6 +803,7 @@ function writeScoreboard() {
         p1WL: currentP1WL,
         p2Name: p2NameInp.value,
         p2Team: p2TagInp.value,
+        p2Pronouns: p2PronounsInp.value,
         p2Character: charP2,
         p2Skin: skinP2,
         p2Color: colorP2,
