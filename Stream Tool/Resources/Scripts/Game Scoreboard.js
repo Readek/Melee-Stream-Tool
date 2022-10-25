@@ -42,6 +42,7 @@ function init() {
 async function getData(scInfo) {
 	let p1Name = scInfo['p1Name'];
 	let p1Team = scInfo['p1Team'];
+	let p1Pronouns = scInfo['p1Pronouns'];
 	let p1Score = scInfo['p1Score'];
 	let p1Color = scInfo['p1Color'];
 	let p1Character = scInfo['p1Character'];
@@ -50,6 +51,7 @@ async function getData(scInfo) {
 	
 	let p2Name = scInfo['p2Name'];
 	let p2Team = scInfo['p2Team'];
+	let p2Pronouns = scInfo['p2Pronouns'];
 	let p2Score = scInfo['p2Score'];
 	let p2Color = scInfo['p2Color'];
 	let p2Character = scInfo['p2Character'];
@@ -148,7 +150,7 @@ async function getData(scInfo) {
 
 		//finally out of the intro, now lets start with player 1 first
 		//update player name and team name texts
-		updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', p1Name, p1Team);
+		updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', 'p1Pronouns', p1Name, p1Team, p1Pronouns);
 		//sets the starting position for the player text, then fades in and moves the p1 text to the next keyframe
 		gsap.fromTo("#p1Wrapper", 
 			{x: -pMove}, //from
@@ -180,7 +182,7 @@ async function getData(scInfo) {
 
 
 		//took notes from player 1? well, this is exactly the same!
-		updatePlayerName('p2Wrapper', 'p2Name', 'p2Team', p2Name, p2Team);
+		updatePlayerName('p2Wrapper', 'p2Name', 'p2Team', 'p2Pronouns', p2Name, p2Team, p2Pronouns);
 		gsap.fromTo("#p2Wrapper", 
 			{x: pMove},
 			{delay: introDelay+.1, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
@@ -271,13 +273,15 @@ async function getData(scInfo) {
 		
 		//player 1 time!
 		if (document.getElementById('p1Name').textContent != p1Name ||
-			document.getElementById('p1Team').textContent != p1Team) {
+			document.getElementById('p1Team').textContent != p1Team ||
+			document.getElementById('p1Pronouns').textContent != p1Pronouns) {
 			//move and fade out the player 1's text
 			fadeOutMove("#p1Wrapper", -pMove, () => {
 				//now that nobody is seeing it, quick, change the text's content!
-				updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', p1Name, p1Team);
+				updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', 'p1Pronouns', p1Name, p1Team, p1Pronouns);
 				//fade the name back in with a sick movement
 				fadeInMove("#p1Wrapper");
+				fadeInMove("#p1Pronouns-wrapper")
 			});
 		}
 
@@ -336,10 +340,12 @@ async function getData(scInfo) {
 
 		//did you pay attention earlier? Well, this is the same as player 1!
 		if (document.getElementById('p2Name').textContent != p2Name ||
-			document.getElementById('p2Team').textContent != p2Team){
+			document.getElementById('p2Team').textContent != p2Team ||
+			document.getElementById('p2Pronouns').textContent != p2Pronouns){
 			fadeOutMove("#p2Wrapper", pMove, () => {
-				updatePlayerName('p2Wrapper', 'p2Name', 'p2Team', p2Name, p2Team);
+				updatePlayerName('p2Wrapper', 'p2Name', 'p2Team', 'p2Pronouns', p2Name, p2Team, p2Pronouns);
 				fadeInMove("#p2Wrapper");
+				fadeInMove("#p2Pronouns-wrapper");
 			});
 		}
 
@@ -616,15 +622,18 @@ function updateSocial(mainSocial, mainText, mainBox, otherSocial, otherBox) {
 }
 
 //player text change
-function updatePlayerName(wrapperID, nameID, teamID, pName, pTeam) {
+function updatePlayerName(wrapperID, nameID, teamID, pronounsID, pName, pTeam, pPronouns) {
 	const nameEL = document.getElementById(nameID);
 	nameEL.style.fontSize = '30px'; //set original text size
 	nameEL.textContent = pName; //change the actual text
 	const teamEL = document.getElementById(teamID);
 	teamEL.style.fontSize = '20px';
 	teamEL.textContent = pTeam;
+	const pronounsEl = document.getElementById(pronounsID);
+	pronounsEl.textContent = pPronouns;
 	resizeText(document.getElementById(wrapperID)); //resize if it overflows
 }
+
 
 //round change
 function updateRound(round) {
