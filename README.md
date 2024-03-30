@@ -1,19 +1,24 @@
-![preview](https://cdn.discordapp.com/attachments/574303886869790730/752865123009298532/unknown.png)
+<p align="center">
+
+  <img src="https://github.com/Readek/Melee-Stream-Tool/blob/master/Preview.png" alt="Preview">
+  
+</p>
 
 # Melee-Stream-Tool
 *Also available for [Rivals of Aether](https://github.com/Readek/RoA-Stream-Tool) and [Rushdown Revolt](https://github.com/Readek/Rushdown-Revolt-Stream-Tool)!*
 
 So you're interested in doing SSBMelee streams, huh? Luckily for you, with this tool you'll be able to update all the variables you need for the provided overlays with the provided GUI, and easily customize the overlays to make them your own!
 
+*Any doubts? Join the [Discord Server](https://discord.gg/EX22CTBNrM)!*
+
 ---
 
 ## Features
-- [Handy interface](https://gfycat.com/linearglaringkitten) to quickly change everything you need, like player names, characters, scores, round, casters...
-- [Easy and fast setup](https://gfycat.com/mediumtotalhalicore) using a browser source. Drag and drop!
-- A [game overlay](https://gfycat.com/favorableidioticbeaver) is included, with renders for all characters and skins!
-- A [VS Screen](https://gfycat.com/jitterymediumchimneyswift) is also included, to be used in pauses between games.
+- [Handy interface](https://readek.github.io/Resources/Vids/Melee%20GUI%20Demo.mp4) to quickly change everything you need, like player names, characters, scores, round, casters...
+- Easy and fast setup using a browser source. Drag and drop!
+- A [game overlay](https://readek.github.io/Resources/Vids/Melee%20SC%20Demo.mp4) is included, with renders for all characters and skins!
+- A [VS Screen](https://readek.github.io/Resources/Vids/Melee%20VS%20Demo.mp4) is also included, to be used in pauses between games.
 - Easy to customize! Made in html/javascript, every file can be edited at will!
-- This is **not** a [Stream Control](http://farpnut.net/StreamControl) clone. It doesn't have anything to do with it, everything is custom made.
 
 ---
 
@@ -21,7 +26,7 @@ So you're interested in doing SSBMelee streams, huh? Luckily for you, with this 
 These are instructions for regular OBS Studio, but I imagine you can do the same with other streaming software:
 - Get the [latest release](https://github.com/Readek/Melee-Stream-Tool/releases).
 - Extract somewhere.
-- Drag and drop `Game Scoreboard.htlm` into OBS, or add a new browser source in OBS pointing at the local file.
+- Drag and drop `Game Scoreboard.html` into OBS, or add a new browser source in OBS pointing at the local file.
 - If the source looks weird, manually set the source's properties to 1920 width and 1080 height, or set your OBS canvas resolution to 1080p, or make the source fit the screen.
 - In the source's properties, change *Use custom frame rate* -> `60` (if streaming at 60fps of course).
 - **Also tick** `Refresh browser when scene becomes active`.
@@ -61,7 +66,7 @@ And most importantly, this project was created using [RoA-Stream-Tool](https://g
 
 ---
 
-Do you want to adapt this project to another game but can't figure out how to? Lucky for you, I'm open for commisions! Contact me on Twitter [@Readeku](https://twitter.com/Readeku) or on Discord `Readek#5869`!.
+Do you want to adapt this project to another game but can't figure out how to? I would be happy to help! Contact me on [Mastodon](https://mstdn.social/@Readek) or on the project's [Discord Server](https://discord.gg/EX22CTBNrM)!
 
 Do you want to support this project? [Buy me a ko-fi](https://ko-fi.com/readek) or tip me [directly](https://streamlabs.com/readek/tip)!
 
